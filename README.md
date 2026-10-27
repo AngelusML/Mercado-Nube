@@ -18,20 +18,21 @@
 ---
 
 > [!IMPORTANT]
-> **Demo local, sin gasto en AWS.** Todo el flujo se ejecuta con Docker, Moto (emulación S3) y PostgreSQL.
-> La infraestructura AWS está descrita en Terraform y fue validada con `terraform validate`, pero **nunca se aplicó**.
-> No se creó ningún recurso ni se usaron credenciales reales de AWS.
+> **Demo local, sin gasto en AWS** (permitido por el anexo del simulacro). Todo el flujo se ejecuta con Docker, Moto (emulación S3) y PostgreSQL.
+> La infraestructura AWS está en Terraform: pasa `fmt` y `validate` y se probó con `apply` contra Moto, pero **nunca se aplicó en una cuenta real**.
+> La versión Redshift del modelo está en `sql/redshift/`.
 
 ## Lo que demuestra este proyecto
 
-- Ingesta de un histórico de ventas, eventos diarios y un catálogo versionado.
-- Data lake local compatible con S3 y organizado por capas `raw → cleaned → curated` (Parquet).
-- Airflow con dos DAGs: carga histórica y procesamiento diario incremental.
-- Modelo dimensional en PostgreSQL con dimensiones, hechos, SCD2 y miembros desconocidos explícitos.
-- Cuarentena, deduplicación, control de conflictos y *quality gates* antes y después de publicar.
-- Idempotencia real ante reruns, recuperación tras fallas y soporte de eventos tardíos.
-- Siete consultas de negocio versionadas y evidencia reproducible de cada resultado.
-- Referencia AWS/IAM segura como código, validada sin `plan` ni `apply`.
+- Ingesta de un histórico de ventas, 7 lotes diarios de eventos y un catálogo versionado desde una API.
+- Data lake compatible con S3 y organizado por capas `raw → cleaned → curated` (Parquet).
+- Airflow con dos DAGs: carga histórica y lote diario (usa la fecha lógica `ds`, admite backfill por intervalo).
+- **Validación antes de publicar** (write-audit-publish) y quality gate final después de publicar.
+- Modelo dimensional en PostgreSQL con SCD2 y miembros desconocidos explícitos; DDL equivalente para Redshift.
+- Cuarentena con motivo, deduplicación determinista y control de conflictos.
+- Idempotencia ante reruns, recuperación tras fallas y reproceso de eventos tardíos.
+- Siete consultas de negocio versionadas con evidencia de cada resultado.
+- Terraform con IAM de mínimo privilegio, alarmas de CloudWatch, Redshift Serverless y presupuesto opcionales.
 
 ## Resultados verificables
 
@@ -39,20 +40,22 @@
 |---|---:|
 | Histórico leído | **541,910** filas |
 | Hechos de línea de factura | **534,130** |
-| Eventos publicados | **31,589** |
-| Órdenes en lifecycle | **19,330** |
+| Eventos leídos (7 lotes) | **54,405** |
+| Eventos publicados | **53,783** |
+| Órdenes en lifecycle | **27,000** |
 | Versiones SCD2 de producto | **5,312** |
 | Productos corrientes | **3,958** |
-| Eventos tardíos | **1,076** (3.41%) |
-| Filas en cuarentena | **2,545** |
-| Quality gates | **80/80 pass** |
-| Tests | **11/11 pass** |
-| Terraform | `fmt` + `validate` OK, sin `apply` |
+| Eventos tardíos | **1,594** (2.96%) |
+| Filas en cuarentena | **2,602** |
+| Checks de calidad | **216/216 pass** |
+| Tests unitarios | **20/20 pass** |
+| Terraform | `fmt` + `validate` OK, `apply` probado contra Moto |
 
-Reconciliación del histórico:
+Reconciliación:
 
 ```text
-541,910 leídas = 2,517 rechazadas + 5,263 duplicadas + 534,130 publicadas
+Histórico: 541,910 leídas = 2,517 rechazadas + 5,263 duplicadas + 534,130 publicadas
+Eventos:    54,405 leídos =    85 rechazados +   537 duplicados +  53,783 publicados
 ```
 
 La evidencia completa está en [`docs/evidencia.md`](docs/evidencia.md) y en los archivos crudos de [`docs/evidence/`](docs/evidence/).
@@ -71,27 +74,30 @@ flowchart LR
 
     AIRFLOW --> RAW[("S3 raw<br/>Moto")]
     RAW --> CLEAN[("S3 cleaned<br/>Parquet")]
-    CLEAN --> CUR[("S3 curated<br/>Parquet")]
+    CLEAN --> VAL{"Validación<br/>previa"}
+    VAL -->|"pasa"| CUR[("S3 curated<br/>Parquet")]
+    VAL -->|"falla: no se publica"| ALERT
     CLEAN --> QUAR["ops.quarantine_records"]
     CUR --> PG[("PostgreSQL 16<br/>analytics + ops")]
     QUAR --> PG
 
     PG --> Q["7 queries de negocio"]
-    PG --> QG["Quality gates"]
-    QG --> ALERT["ops.alerts"]
-    AIRFLOW --> QG
+    PG --> QG["Quality gate final"]
+    QG --> ALERT["ops.alerts / métricas"]
 ```
+
+Diagrama de credenciales y accesos: [`docs/arquitectura.md`](docs/arquitectura.md#credenciales-y-accesos).
 
 ### Equivalencia local → AWS
 
 | Local | Referencia AWS | Decisión |
 |---|---|---|
 | Moto S3 | S3 versionado, SSE-S3 y lifecycle | Mismo contrato de llaves y cliente `boto3` |
-| PostgreSQL 16 | Redshift / Redshift Serverless | Modelo y SQL compatibles; PostgreSQL evita costo local |
-| Airflow LocalExecutor | MWAA | DAGs sin dependencia del scheduler local |
-| FastAPI local | API real / Lambda / AppFlow | Simula paginación, rate limit y errores transitorios |
-| Adminer | Consola SQL administrada | Solo comodidad para explorar datos |
-| Terraform validado | Terraform aplicado con aprobación | Roles de despliegue y ejecución separados |
+| PostgreSQL 16 | Redshift Serverless | DDL propio en `sql/redshift/` (DISTKEY/SORTKEY, SUPER) y carga COPY + MERGE |
+| Airflow LocalExecutor | MWAA | Mismos DAGs; schedule por `DAILY_SCHEDULE` |
+| `.env` local | Secrets Manager + rol de ejecución (STS) | Sin access keys en código ni imágenes |
+| `ops.alerts` + log `METRIC` | CloudWatch métricas + alarmas → SNS | `src/metrics.py` publica si `CLOUDWATCH_METRICS_ENABLED=true` |
+| FastAPI local | API real / Lambda | Simula paginación, rate limit y errores transitorios |
 
 ## Stack
 
@@ -100,69 +106,60 @@ flowchart LR
 | Orquestación | Apache Airflow 2.10, `LocalExecutor` |
 | Procesamiento | Python, pandas, PyArrow |
 | Data lake | S3 compatible con Moto, Parquet, checksums SHA-256 |
-| Warehouse | PostgreSQL 16 (`staging`, `analytics`, `ops`) |
+| Warehouse | PostgreSQL 16 (`staging`, `analytics`, `ops`); Redshift en `sql/redshift/` |
 | API de catálogo | FastAPI + Uvicorn |
 | Infraestructura como código | Terraform + AWS provider 5.x |
 | Pruebas | pytest (unitarias e integración) |
 | Contenedores | Docker Compose |
 
-## Inicio rápido
+## Inicio rápido (una sola instrucción)
 
 Requisitos: Docker Desktop con Compose v2, PowerShell 7+ y ~4 GB de RAM libre.
 
 ```powershell
-# 1. Crear la configuración local
-Copy-Item .env.example .env
-
-# 2. Construir y levantar el stack
-docker compose up -d --build
-docker compose ps
+.\scripts\run_demo.ps1
 ```
 
-> `.env` contiene secretos locales y está excluido de Git. `.env.example` solo incluye valores de demostración.
-> Cambia las claves si expones los puertos fuera de tu equipo.
+El script:
+
+1. crea `.env` desde `.env.example` con contraseñas y claves aleatorias si no existe (`.env` no se versiona);
+2. levanta el stack y espera los healthchecks;
+3. ejecuta la carga histórica y los 7 lotes diarios (2026-10-20 a 2026-10-26);
+4. ejecuta las 7 consultas y guarda el resultado en `docs/evidence/sql_results.txt`.
+
+Es idempotente: si un lote ya está publicado, lo omite. Opciones: `-ForceDaily`, `-IncludeHistorical`, `-SkipBuild`, `-StartDate`, `-EndDate`.
 
 ### Servicios locales
 
-| Servicio | URL / conexión | Credenciales de demo |
+| Servicio | URL / conexión | Credenciales |
 |---|---|---|
-| Airflow | <http://localhost:8088> | `admin` / `admin123` |
+| Airflow | <http://localhost:8088> | `admin` / valor de `AIRFLOW_ADMIN_PASSWORD` en `.env` |
 | API de catálogo | <http://localhost:8001/docs> | — |
-| PostgreSQL | `localhost:5433`, DB `mercado_nube` | `mn_app` / valor en `.env` |
+| PostgreSQL | `localhost:5433`, DB `mercado_nube` | `mn_app` / valor de `WAREHOUSE_PASSWORD` en `.env` |
 | Adminer | <http://localhost:8082> | Usar conexión a `postgres` |
-| Moto S3 | <http://localhost:9002> | `test` / `test` |
+| Moto S3 | <http://localhost:9002> | `test` / `test` (dummy) |
 
-Al iniciar, Airflow aplica `sql/ddl.sql`, siembra dimensiones y crea el bucket local.
-
-### Ejecutar la demo
+### Ejecutar lotes a mano, backfill y recuperación
 
 ```powershell
-# Carga histórica + catálogo v1
-docker exec mn_airflow airflow dags trigger 01_historical_load
-
-# Lotes diarios publicados
+# Un lote puntual
 docker exec mn_airflow airflow dags trigger 02_daily_events --conf '{"ingest_date":"2026-10-22"}'
-docker exec mn_airflow airflow dags trigger 02_daily_events --conf '{"ingest_date":"2026-10-23"}'
-docker exec mn_airflow airflow dags trigger 02_daily_events --conf '{"ingest_date":"2026-10-24"}'
+
+# Backfill / replay de un intervalo sin editar código
+.\scripts\backfill.ps1 -Start 2026-10-20 -End 2026-10-26
+
+# Falla simulada después de escribir en S3 y recuperación idempotente
+.\scripts\demo_fail_recover.ps1
 ```
 
-O ejecuta el flujo completo y las verificaciones desde PowerShell:
-
-```powershell
-.\scripts\run_demo.ps1
-.\scripts\run_queries.ps1
-.\scripts\verify.ps1
-```
-
-`run_demo.ps1` es idempotente: reutiliza los mismos `batch_id` y llaves S3, y evita reprocesar lotes ya publicados.
-Usa `-IncludeHistorical` o `-ForceDaily` para forzar una ejecución; `-SkipBuild` evita reconstruir las imágenes.
+Sin `--conf`, el DAG diario usa la fecha lógica de Airflow (`ds`); con `DAILY_SCHEDULE=@daily` en `.env` corre solo cada día.
 
 ## Datos incluidos y capas
 
 El repositorio incluye los datos de entrada para que la demo sea reproducible sin descargas adicionales:
 
-- histórico público **Online Retail II** (UCI);
-- lotes sintéticos de eventos en JSONL;
+- histórico público **Online Retail II** (UCI Machine Learning Repository, hoja "Year 2010-2011", licencia **CC BY 4.0**);
+- 7 lotes sintéticos de eventos en JSONL (semilla 42), con duplicados, conflictos, eventos tardíos e inválidos;
 - versiones v1, v2 y v3 del catálogo.
 
 Los scripts de `scripts/` permiten regenerarlos de forma determinista.
@@ -185,9 +182,6 @@ curated/
   table=dim_product/...
 ```
 
-Cada escritura local usa `ServerSideEncryption=AES256`. La referencia Terraform refuerza cifrado por defecto,
-versionado, bloqueo de acceso público, TLS obligatorio y lifecycle por capa.
-
 ## Modelo dimensional
 
 ```mermaid
@@ -203,33 +197,28 @@ erDiagram
 ```
 
 - **`dim_product`**: SCD2 por `sku` con `valid_from`, `valid_to`, `is_current`, `record_hash` y `catalog_version`.
-- **`dim_customer`**: histórico más miembros desconocidos explícitos (`customer_key = -1`).
+- **`dim_customer`**: histórico más miembro desconocido explícito (`customer_key = -1`).
 - **`fact_order_line`**: grano línea de factura; ventas y devoluciones con montos en USD.
 - **`fact_order_event`**: grano evento, `UNIQUE(source, event_id)`, `is_late` y `late_hours`.
 - **`fact_order_lifecycle`**: una fila por orden, recalculada con todo el historial de eventos.
 - **Tablas operativas**: cuarentena, métricas por lote/capa, manifiestos, checksums, calidad y alertas.
 
-Las dimensiones de país y moneda conservan miembros desconocidos `ZZ` y `XXX`; no se inventan clientes ni se
-convierten valores faltantes en nulos silenciosos.
-
-Detalle: [`docs/modelo_datos.md`](docs/modelo_datos.md).
+Detalle: [`docs/modelo_datos.md`](docs/modelo_datos.md). Decisiones: [`docs/decisiones.md`](docs/decisiones.md).
 
 ## Calidad, idempotencia y eventos tardíos
 
-### Quality gates
+### Checks de calidad
 
-| Dominio | Checks | Resultado |
-|---|---:|---|
-| Histórico | 9 | 9/9 pass |
-| Eventos (3 lotes) | 13 por lote | 39/39 pass |
-| Catálogo (4 versiones) | 8 por versión | 32/32 pass |
-| **Total** | **80** | **0 fallas** |
+| Dominio | Validación previa (antes de publicar) | Quality gate final | Resultado |
+|---|---:|---:|---|
+| Histórico (1 lote) | 4 | 9 | 13/13 pass |
+| Eventos (7 lotes) | 4 por lote | 13 por lote | 119/119 pass |
+| Catálogo (7 lotes) | 4 por lote | 8 por lote | 84/84 pass |
+| **Total** | | | **216/216** |
 
-Se validan contratos, reconciliación de conteos, tasas de rechazo/duplicado, integridad de `event_id`,
-joins a dimensiones, cobertura de lifecycle, frescura de ingesta y consistencia SCD2.
-
-Si un gate falla, el run termina en `failed` y se registra una alerta. El lote ya publicado **no se revierte
-automáticamente**: la corrección es explícita e idempotente.
+- **Validación previa:** tasas de rechazo y duplicados bajo umbral y cuadre `leídas = rechazadas + duplicadas + limpias`. Si falla, el lote **no se publica**.
+- **Quality gate final:** contratos, reconciliación, integridad de `event_id`, joins a dimensiones, cobertura de lifecycle, frescura y consistencia SCD2. Si falla, el run queda en `failed` y se registra una alerta.
+- **Reglas destacadas:** coherencia país-moneda (`country_currency_mismatch`), precio no positivo, SKU ausente, fechas inválidas y conflicto de `event_id`.
 
 ### Idempotencia
 
@@ -242,12 +231,7 @@ automáticamente**: la corrección es explícita e idempotente.
 
 ### Eventos tardíos
 
-Un evento es tardío cuando `ingested_at - event_time_utc > 24 h`. Al publicar, se recalculan **todas** las
-órdenes afectadas, no solo el evento nuevo. Esto permite que un `paid` tardío actualice correctamente el
-lifecycle y `time_to_pay_hours`.
-
-Resultado: **1,076 eventos tardíos (3.41%)** y **1,068 órdenes** afectadas.
-La frescura del gate mide `ingested_at`; ser tardío no implica rechazo automático.
+Un evento es tardío cuando `ingested_at - event_time_utc > 24 h`. Al publicar, se recalculan **todas** las órdenes afectadas, no solo el evento nuevo. Resultado: **1,594 eventos tardíos (2.96%)** en **1,579 órdenes**.
 
 Detalle: [`docs/calidad.md`](docs/calidad.md).
 
@@ -257,14 +241,16 @@ Las siete consultas están en [`sql/queries/`](sql/queries/) y sus resultados co
 [`docs/evidence/sql_results.txt`](docs/evidence/sql_results.txt).
 
 | # | Pregunta | Hallazgo principal |
-|---|---|---:|
-| 1 | Ventas, devoluciones y neto por mes/país/moneda | Dic-2010 UK: neto **USD 1,045,686.90** |
-| 2 | Ingresos y devoluciones por categoría | General neto **USD 5.70 M** |
-| 3 | Top 10 SKU por venta neta | `22423` Regency Cakestand: **USD 261,799.48** |
-| 4 | Tiempo a pago y cancelación | Perú: pago medio **17.90 h**, cancelación **7.47%** |
-| 5 | Eventos tardíos y reprocesamiento | **1,076** tardíos; **1,068** órdenes afectadas |
-| 6 | Rechazo por fuente y motivo | Histórico **0.4645%**; eventos **0.0878%** |
-| 7 | Historia de atributos del catálogo | SKUs con 3 versiones y cambios de categoría |
+|---|---|---|
+| 1 | Ventas, devoluciones y neto por mes/país/moneda (USD) | Histórico (GBP) y eventos (COP/MXN/PEN) en una sola consulta |
+| 2 | Ingresos y proporción de devoluciones por categoría | General lidera ingresos; Stationery tiene 25.6% de devoluciones |
+| 3 | Top 10 SKU por venta neta y por devoluciones | `22423` lidera ventas; `23843` es una devolución total (100%) |
+| 4 | Tiempo a pago y cancelación | ~18 h de mediana; cancelación entre 7.7% y 7.9% por país |
+| 5 | Eventos tardíos y reprocesamiento | 1,594 tardíos; 1,579 órdenes recalculadas |
+| 6 | Rechazo por fuente, motivo y últimos 7 lotes | Histórico 0.46% (`invalid_price`); eventos 0.16% |
+| 7 | Productos con atributos modificados | 965 de 3,958 SKU cambiaron; historial SCD2 completo |
+
+Limitación: el histórico es 2010–2011 y los eventos 2026; se reportan como series separadas.
 
 ## Evidencia y verificación
 
@@ -280,8 +266,6 @@ Las siete consultas están en [`sql/queries/`](sql/queries/) y sus resultados co
 | SSE-S3 local | [`s3_sse.txt`](docs/evidence/s3_sse.txt) |
 | Terraform | [`terraform_validate.txt`](docs/evidence/terraform_validate.txt) |
 
-Comandos de verificación:
-
 ```powershell
 # Tests unitarios
 docker exec mn_airflow python -m pytest tests -m "not integration" -q
@@ -289,7 +273,7 @@ docker exec mn_airflow python -m pytest tests -m "not integration" -q
 # Tests completos + queries (requiere stack y datos)
 docker exec -e RUN_INTEGRATION_TESTS=1 mn_airflow python -m pytest tests -q
 
-# Conteos y quality gates
+# Conteos y checks de calidad
 .\scripts\verify.ps1
 
 # Regenerar evidencia SQL
@@ -298,12 +282,13 @@ docker exec -e RUN_INTEGRATION_TESTS=1 mn_airflow python -m pytest tests -q
 
 ## AWS y Terraform
 
-La carpeta [`terraform/`](terraform/) es una referencia **AWS-ready**, no un despliegue:
+La carpeta [`terraform/`](terraform/) describe la infraestructura AWS:
 
-- bucket S3 con versionado, SSE-S3, bloqueo público, TLS obligatorio y lifecycle;
-- rol de ejecución para MWAA y rol de despliegue separado;
-- CloudWatch Logs, metric filter de errores, topic SNS y alarmas;
-- MWAA opcional con `enable_mwaa=false` por defecto.
+- bucket S3 por ambiente con versionado, SSE-S3, bloqueo público, TLS obligatorio y lifecycle por capa;
+- rol de ejecución de MWAA con mínimo privilegio (escribe solo en `raw/`, `cleaned/`, `curated/`) y rol de despliegue separado;
+- log groups de MWAA con retención, alarmas de errores, aumento de rechazos, fallo de calidad y retraso de datos → SNS;
+- MWAA (`enable_mwaa`) y Redshift Serverless (`enable_redshift`) opcionales, apagados por defecto;
+- AWS Budgets y suscripción de correo con `alert_email`.
 
 ```powershell
 cd terraform
@@ -312,12 +297,7 @@ terraform fmt -check
 terraform validate
 ```
 
-> `init` descarga el provider y no requiere credenciales. `validate` no crea recursos.
-> **No se ejecutó `plan` ni `apply`.** La demo no tiene costo AWS.
-
-El rol de despliegue administra infraestructura del proyecto, pero no puede leer ni escribir objetos del
-bucket de datos. El rol de ejecución solo accede al bucket, logs y métricas de MWAA. Los detalles y la ruta
-de despliegue autorizada están en [`terraform/README.md`](terraform/README.md).
+Detalle de roles, credenciales, costos y limpieza: [`terraform/README.md`](terraform/README.md).
 
 ## Estructura del repositorio
 
@@ -327,32 +307,30 @@ config/              Países, aliases, monedas y tasas DEMO
 dags/                DAG 01 histórico y DAG 02 diario
 data/                Histórico, eventos y catálogo de la demo incluidos
 docker/              Imagen de Airflow y bootstrap de PostgreSQL
-docs/                Arquitectura, modelo, calidad, operación y evidencia
-scripts/             Generación, demo, queries y verificación
-sql/                 DDL y siete consultas de negocio
-src/                 Pipelines, calidad, storage, cliente API y generador
-terraform/           S3 + IAM + CloudWatch + MWAA opcional (solo validado)
+docs/                Arquitectura, decisiones, modelo, calidad, operación y evidencia
+scripts/             Demo, backfill, generación, queries y verificación
+sql/                 DDL PostgreSQL, DDL y carga Redshift, siete consultas de negocio
+src/                 Pipelines, calidad, métricas, storage, cliente API y generador
+terraform/           S3 + IAM + CloudWatch + MWAA/Redshift/Budgets opcionales
 tests/               Pruebas unitarias e integración
 ```
 
 ## Costos aproximados y limpieza
 
-**No se creó ningún recurso AWS en esta entrega.** Los valores siguientes son supuestos de laboratorio en
-`us-east-1` para dimensionar, no una cotización.
+**No se creó ningún recurso AWS.** Supuestos de laboratorio en `us-east-1`, no una cotización:
 
 | Recurso | Supuesto | Costo aproximado |
 |---|---|---:|
 | Local (Docker + Moto + PostgreSQL) | Laptop, sin AWS | **USD 0** |
 | S3 Standard | 10 GB, lifecycle a IA/expiración | ~USD 0.23/mes + requests |
-| CloudWatch Logs | 1 GB ingerido, retención 30 días | ~USD 0.80/mes |
-| MWAA | `mw1.small`, 730 h | ~USD 360/mes (referencia) |
-| Redshift Serverless | 8 RPU mínimo, si se habilita | ~USD 2.88/h (referencia) |
+| CloudWatch Logs + alarmas | 1 GB ingerido, retención 30 días | ~USD 1/mes |
+| MWAA | `mw1.small`, 730 h | ~USD 360/mes |
+| Redshift Serverless | 8 RPU, 1 h de uso al día | ~USD 90/mes |
 
-Por eso `enable_mwaa=false` es el valor por defecto. Para un laboratorio autorizado, define AWS Budgets y
-destruye los recursos al terminar.
+Por eso MWAA y Redshift están apagados por defecto y hay un presupuesto mensual opcional (USD 20).
 
 ```powershell
-# Detener conservando volúmenes (base y logs siguen disponibles)
+# Detener conservando volúmenes
 docker compose down
 
 # Destructivo: elimina base, logs y artefactos locales del proyecto
@@ -361,27 +339,29 @@ docker compose down -v
 
 ## Decisiones y límites
 
-- **Sin Spark, Glue ni dbt:** el volumen del MVP no justifica un motor distribuido. pandas + PyArrow deja
-  Parquet como contrato para una futura migración.
-- **PostgreSQL como warehouse local:** reproduce el modelo, constraints y SQL de ventanas sin costo.
-- **Moto en vez de MinIO:** mantiene el mismo contrato de S3 y permite validar cifrado y versionado.
-- **Datos separados en el tiempo:** el histórico es de 2010–2011 y los eventos son de 2026; se documentan
-  como hechos separados, no como una única serie temporal.
+- **Sin Spark, Glue ni dbt:** el volumen del MVP no lo justifica; Parquet deja la puerta abierta a Glue.
+- **PostgreSQL como warehouse local:** el DDL local no es directamente compatible con Redshift; por eso existe `sql/redshift/`.
+- **Moto como S3 local:** mismo cliente `boto3`; guarda en memoria y no cifra de verdad (el cifrado real está en Terraform).
+- **Datos separados en el tiempo:** histórico 2010–2011 y eventos 2026.
 - **Tasas DEMO:** no son una fuente financiera real.
-- **Batch incremental, no streaming:** el patrón es idempotente y reprocesable; CDC/streaming queda fuera del MVP.
-- **Terraform no aplicado:** validar no equivale a desplegar. `enable_mwaa=false` evita costos accidentales.
+- **Batch incremental, no streaming:** idempotente y reprocesable; CDC/streaming queda fuera del MVP.
+- **Sin despliegue real:** Terraform validado y probado contra Moto; falta ejecutarlo en una cuenta de laboratorio.
+
+Detalle y alternativas descartadas: [`docs/decisiones.md`](docs/decisiones.md).
 
 ## Documentación
 
-- [Arquitectura](docs/arquitectura.md) — componentes, flujos y decisiones.
+- [Arquitectura](docs/arquitectura.md) — componentes, flujos, credenciales y accesos.
+- [Decisiones técnicas](docs/decisiones.md) — alternativas, granularidad, deduplicación, tardíos, moneda, idempotencia y seguridad.
 - [Modelo de datos](docs/modelo_datos.md) — granos, claves, SCD2 y ciclo de orden.
 - [Calidad](docs/calidad.md) — reglas, umbrales y semántica.
 - [Operación](docs/operacion.md) — runbook, fallas, recuperación y comandos.
 - [Evidencia](docs/evidencia.md) — resultados, checksums, run IDs y salidas.
-- [Terraform](terraform/README.md) — referencia AWS e IAM.
+- [Terraform](terraform/README.md) — infraestructura AWS e IAM.
 
 ## Créditos
 
 El histórico utilizado es el dataset público **Online Retail II** del
-[UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/502/online+retail+ii).
+[UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/502/online+retail+ii) (licencia CC BY 4.0),
+el mismo que publica Kaggle en el enlace del enunciado.
 Los eventos y las versiones del catálogo son datos sintéticos generados de forma determinista para esta demo.

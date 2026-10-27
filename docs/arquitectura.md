@@ -119,15 +119,15 @@ Los prefijos Hive permiten particionar por fecha y lote sin cambiar el código. 
 
 ### ¿Por qué pandas/PyArrow y no Spark/Glue?
 
-Volumen del MVP: 541,910 filas históricas + ~32k eventos publicados. Un motor distribuido añade costo, latencia de desarrollo y superficie de fallo. pandas + PyArrow procesa por lote en segundos y deja Parquet como contrato para un futuro Glue/EMR.
+Volumen del MVP: 541,910 filas históricas + ~54k eventos en 7 lotes. Un motor distribuido añade costo, latencia de desarrollo y superficie de fallo. pandas + PyArrow procesa por lote en segundos y deja Parquet como contrato para un futuro Glue/EMR.
 
 ### ¿Por qué PostgreSQL y no Redshift local?
 
-PostgreSQL reproduce el modelo dimensional, constraints, transacciones y SQL de ventanas. Redshift Serverless no corre localmente sin costo. Las queries usan `CASE` y `PERCENTILE_CONT`, no características exclusivas de PostgreSQL.
+PostgreSQL reproduce el modelo dimensional, constraints, transacciones y SQL de ventanas, y Redshift Serverless no corre localmente sin costo. El DDL local **no** es directamente compatible con Redshift (`serial`, `jsonb`, `ON CONFLICT`, FKs que Redshift no hace cumplir), por eso existe una versión propia en `sql/redshift/ddl_redshift.sql` con `DISTKEY`/`SORTKEY`, `SUPER` y carga `COPY` + `MERGE` (`sql/redshift/load_from_s3.sql`). Las 7 consultas de negocio sí usan SQL estándar (`CASE`, ventanas, `PERCENTILE_CONT`) que Redshift soporta.
 
 ### ¿Por qué Moto?
 
-El entorno no disponía de MinIO. Moto implementa la API S3 necesaria (bucket, objetos, checksums) y comparte el mismo cliente `boto3`. Terraform describe el bucket AWS real con versionado, cifrado y lifecycle.
+Moto implementa la API de S3 con el mismo cliente `boto3` que se usaría en AWS, así el código no cambia entre modos (solo `S3_ENDPOINT_URL`). Límites: guarda los objetos en memoria (si el contenedor se reinicia, el lake local se vacía y se regenera re-ejecutando los DAGs desde `data/`) y no cifra de verdad: solo acepta el encabezado `ServerSideEncryption`. El cifrado real, el versionado y el lifecycle están en Terraform.
 
 ### ¿Por qué la API tiene errores simulados?
 
@@ -162,3 +162,53 @@ Los DAGs usan `PIPELINE_RETRIES` (2 por defecto), `PIPELINE_RETRY_DELAY_SECONDS`
 6. Configurar Secret Manager/SSM para credenciales y un schedule de producción.
 
 No se ejecutó `terraform apply` ni se creó ningún recurso AWS.
+
+## Credenciales y accesos
+
+Dónde viven los datos, cómo circulan las credenciales y quién accede a qué. Las líneas punteadas son credenciales; las continuas, acceso a datos.
+
+```mermaid
+flowchart LR
+    subgraph LOCAL["Modo local (Docker)"]
+        ENV[".env (generado por run_demo.ps1, fuera de Git)"]
+        AF["Airflow (mn_airflow)"]
+        PG[("PostgreSQL: analytics, ops, staging")]
+        MOTO[("Moto S3: raw/ cleaned/ curated/")]
+        API["API catálogo"]
+        ENV -. "WAREHOUSE_PASSWORD, FERNET_KEY" .-> AF
+        ENV -. "POSTGRES_*_PASSWORD" .-> PG
+        AF -->|"usuario mn_app"| PG
+        AF -->|"test/test (dummy)"| MOTO
+        AF -->|"HTTP, sin credenciales"| API
+    end
+
+    subgraph AWS["Modo AWS (Terraform)"]
+        STS["STS: credenciales temporales"]
+        MWAA["MWAA (rol de ejecución)"]
+        S3[("S3: raw/ cleaned/ curated/ + dags/")]
+        SM["Secrets Manager: clave admin Redshift"]
+        RS[("Redshift Serverless")]
+        CW["CloudWatch Logs + métricas + alarmas → SNS"]
+        CI["CI / Terraform (rol de despliegue)"]
+        STS -. "AssumeRole" .-> MWAA
+        STS -. "AssumeRole" .-> CI
+        MWAA -->|"lee todo, escribe raw/cleaned/curated"| S3
+        MWAA -. "GetSecretValue" .-> SM
+        MWAA -->|"SQL"| RS
+        MWAA -->|"logs, PutMetricData"| CW
+        RS -->|"COPY: solo lee curated/ (rol redshift_copy)"| S3
+        CI -->|"configura recursos, sin leer datos"| S3
+    end
+```
+
+| Componente | Credencial | Recurso | Acceso |
+|---|---|---|---|
+| Airflow local | `.env` → variables de entorno del contenedor | PostgreSQL (`mn_app`) | lectura/escritura en `staging`, `analytics`, `ops` |
+| Airflow local | `test/test` (Moto, no son claves reales) | S3 local | lectura/escritura del bucket local |
+| MWAA | rol de ejecución vía STS (sin access keys) | S3 | lee bucket; escribe solo `raw/`, `cleaned/`, `curated/` |
+| MWAA | rol de ejecución | Secrets Manager | solo el secreto del admin de Redshift |
+| MWAA | rol de ejecución | CloudWatch | sus log groups `airflow-<amb>-*` y métricas `MercadoNube/Pipeline` |
+| Redshift | rol `redshift_copy` | S3 | solo lectura de `curated/` |
+| Terraform/CI | rol de despliegue | infraestructura del proyecto | crear/actualizar; sin acceso a objetos de datos |
+
+Ningún secreto se guarda en el repositorio, en las imágenes Docker, en Airflow Variables ni en los logs (`run_demo.ps1` tampoco imprime contraseñas).
