@@ -1,5 +1,46 @@
--- Pregunta 7: historial de atributos de productos con mas versiones SCD2.
--- Muestra los 5 SKU con mas versiones y los cambios de nombre/categoria/activo.
+-- Pregunta 7: que productos tienen atributos de catalogo modificados durante
+-- el periodo y como se conserva el historial (SCD2 en analytics.dim_product).
+-- Cada cambio de nombre, categoria o estado activo cierra la version anterior
+-- (valid_to, is_current = false) e inserta una nueva; nunca se sobrescribe.
+
+-- 7a) Resumen: cuantos productos cambiaron en cada version y que atributo.
+WITH versions AS (
+    SELECT
+        sku,
+        catalog_version,
+        valid_from,
+        product_name,
+        category,
+        is_active,
+        LAG(product_name) OVER (PARTITION BY sku ORDER BY valid_from) AS previous_name,
+        LAG(category) OVER (PARTITION BY sku ORDER BY valid_from) AS previous_category,
+        LAG(is_active) OVER (PARTITION BY sku ORDER BY valid_from) AS previous_is_active
+    FROM analytics.v_product_history
+)
+SELECT
+    catalog_version,
+    MIN(valid_from)::date AS effective_date,
+    COUNT(DISTINCT sku) AS products_changed,
+    SUM(CASE WHEN product_name <> previous_name THEN 1 ELSE 0 END) AS name_changes,
+    SUM(CASE WHEN category <> previous_category THEN 1 ELSE 0 END) AS category_changes,
+    SUM(CASE WHEN is_active <> previous_is_active THEN 1 ELSE 0 END) AS active_flag_changes
+FROM versions
+WHERE previous_name IS NOT NULL
+GROUP BY catalog_version
+ORDER BY catalog_version;
+
+-- 7b) Total de productos distintos con al menos un cambio en el periodo.
+SELECT
+    COUNT(*) AS products_with_changes,
+    (SELECT COUNT(DISTINCT sku) FROM analytics.v_product_history) AS products_total
+FROM (
+    SELECT sku
+    FROM analytics.v_product_history
+    GROUP BY sku
+    HAVING COUNT(*) > 1
+) changed;
+
+-- 7c) Detalle: historial completo de los 5 SKU con mas versiones.
 WITH target_skus AS (
     SELECT sku
     FROM analytics.dim_product
