@@ -2,6 +2,8 @@
 
 Esta página consolida los resultados verificables de la construcción. Los archivos crudos están en `docs/evidence/`.
 
+> **Actualización (corrida final con 7 lotes, validación previa y regla país-moneda):** los archivos crudos de `docs/evidence/` y la tabla de resultados del `README.md` son la referencia vigente: 534,130 líneas, 53,783 eventos publicados de 54,405 leídos, 27,000 órdenes, 1,594 eventos tardíos, 2,602 filas en cuarentena y 216/216 checks de calidad. Las cifras de las secciones siguientes corresponden a la primera corrida (3 lotes) y se conservan como historial.
+
 ## 1. Conteos finales
 
 | Métrica | Valor |
