@@ -9,10 +9,15 @@ from src import config, pipelines, quality_gate
 
 logger = logging.getLogger(__name__)
 
-CATALOG_VERSION_BY_DATE = {
-    "2026-10-22": 2,
-    "2026-10-23": 3,
-}
+# Fecha desde la cual rige cada version del catalogo (vigencia del API).
+# Antes de 2026-10-22 rige v1 (la carga inicial), el 22 rige v2 y desde el 23, v3.
+# Asi cualquier fecha del intervalo (incluido un backfill) usa la version que
+# correspondia ese dia y nunca publica una version futura antes que una pasada.
+CATALOG_VERSION_START_DATES = [
+    ("2026-10-23", 3),
+    ("2026-10-22", 2),
+    ("0000-01-01", 1),
+]
 
 
 def resolve_catalog_version(ingest_date: str, version: Any = 0) -> int:
@@ -22,7 +27,10 @@ def resolve_catalog_version(ingest_date: str, version: Any = 0) -> int:
         requested = 0
     if requested > 0:
         return requested
-    return CATALOG_VERSION_BY_DATE.get(ingest_date, 3)
+    for start_date, resolved in CATALOG_VERSION_START_DATES:
+        if ingest_date >= start_date:
+            return resolved
+    return 1
 
 
 def _fail_point(context: dict[str, Any]) -> str | None:
@@ -84,6 +92,30 @@ def extract_events_task(ingest_date: str, **context: Any) -> dict[str, Any]:
 def clean_events_task(ingest_date: str, **context: Any) -> dict[str, Any]:
     return pipelines.clean_events(
         ingest_date, fail_point=_fail_point(context)
+    )
+
+
+def validate_historical_task(ingest_date: str, **context: Any) -> dict[str, Any]:
+    return quality_gate.validate_cleaned_batch(
+        source=config.HISTORICAL_SOURCE,
+        batch_id=config.historical_batch_id(ingest_date),
+    )
+
+
+def validate_events_task(ingest_date: str, **context: Any) -> dict[str, Any]:
+    return quality_gate.validate_cleaned_batch(
+        source=config.EVENTS_SOURCE,
+        batch_id=config.events_batch_id(ingest_date),
+    )
+
+
+def validate_catalog_task(
+    ingest_date: str, version: Any = 1, **context: Any
+) -> dict[str, Any]:
+    resolved = resolve_catalog_version(ingest_date, version)
+    return quality_gate.validate_cleaned_batch(
+        source=config.CATALOG_SOURCE,
+        batch_id=config.catalog_batch_id(ingest_date, resolved),
     )
 
 

@@ -1,4 +1,4 @@
-"""DAG 1: carga historica unica + catalogo v1 + quality gate.
+"""DAG 1: carga historica unica + catalogo v1 + validacion + quality gate.
 
 Ejecucion manual:
   docker exec mn_airflow airflow dags trigger 01_historical_load
@@ -20,11 +20,13 @@ from src.tasks import (
     publish_historical_dimensions_task,
     publish_historical_facts_task,
     quality_gate_historical_task,
+    validate_catalog_task,
+    validate_historical_task,
 )
 
 with DAG(
     dag_id="01_historical_load",
-    description="Historico Online Retail II + catalogo v1 + SCD2 + quality gate",
+    description="Historico Online Retail II + catalogo v1 + validacion + SCD2 + quality gate",
     start_date=datetime(2026, 10, 20, tzinfo=timezone.utc),
     schedule=None,
     catchup=False,
@@ -46,6 +48,8 @@ with DAG(
 1. Extrae el CSV historico a `raw/`.
 2. Extrae el catalogo v1 desde el API paginado (rate limit + 500 transitorios).
 3. Limpia, normaliza, deduplica y manda rechazos a cuarentena.
+3b. **Valida** la capa cleaned (umbrales de rechazo/duplicados y cuadre de
+    conteos). Si falla, el lote NO se publica.
 4. Publica SCD2 de productos y clientes historicos.
 5. Publica hechos con conversion USD.
 6. Ejecuta el quality gate (reconciliacion, tasas, USD, cobertura).
@@ -75,6 +79,16 @@ transaccional.
         python_callable=clean_catalog_task,
         op_kwargs={"ingest_date": "{{ params.ingest_date }}", "version": 1},
     )
+    validate_historical = PythonOperator(
+        task_id="validate_historical",
+        python_callable=validate_historical_task,
+        op_kwargs={"ingest_date": "{{ params.ingest_date }}"},
+    )
+    validate_catalog = PythonOperator(
+        task_id="validate_catalog_v1",
+        python_callable=validate_catalog_task,
+        op_kwargs={"ingest_date": "{{ params.ingest_date }}", "version": 1},
+    )
     publish_dimensions = PythonOperator(
         task_id="publish_historical_dimensions",
         python_callable=publish_historical_dimensions_task,
@@ -91,8 +105,8 @@ transaccional.
         op_kwargs={"ingest_date": "{{ params.ingest_date }}"},
     )
 
-    extract_historical >> clean_historical
-    extract_catalog >> clean_catalog
-    [clean_historical, clean_catalog] >> publish_dimensions
+    extract_historical >> clean_historical >> validate_historical
+    extract_catalog >> clean_catalog >> validate_catalog
+    [validate_historical, validate_catalog] >> publish_dimensions
     publish_dimensions >> publish_facts
     [publish_facts, publish_dimensions] >> quality_gate

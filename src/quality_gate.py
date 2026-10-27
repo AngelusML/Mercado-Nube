@@ -1,4 +1,8 @@
-"""Quality gate: reconcilia metricas y bloquea la publicacion si algo no cuadra."""
+"""Quality gates.
+
+- validate_cleaned_batch: corre ANTES de publicar y bloquea la publicacion.
+- run_pipeline_quality: corre DESPUES de publicar y reconcilia el destino.
+"""
 
 from __future__ import annotations
 
@@ -465,5 +469,109 @@ def run_pipeline_quality(
     if failed:
         raise RuntimeError(
             "Quality gate fallo: " + json.dumps(summary["failed"], ensure_ascii=False)
+        )
+    return summary
+
+
+# ---------------------------------------------------------------------------
+# Validacion PREVIA a publicar (write-audit-publish).
+# Se ejecuta sobre la capa cleaned: si falla, el lote NO llega al warehouse.
+# El quality gate final (run_pipeline_quality) sigue corriendo despues de
+# publicar para reconciliar lo que quedo en el destino.
+# ---------------------------------------------------------------------------
+def evaluate_cleaned_batch(
+    *,
+    rows_read: int,
+    rows_rejected: int,
+    rows_duplicated: int,
+    cleaned_rows: int,
+    max_rejection_rate: float,
+    max_duplicate_rate: float,
+) -> list[dict[str, Any]]:
+    """Reglas puras (sin base de datos) para poder probarlas con pytest."""
+    rejection_rate = rows_rejected / rows_read if rows_read else 0.0
+    duplicate_rate = rows_duplicated / rows_read if rows_read else 0.0
+    accounted = rows_rejected + rows_duplicated + cleaned_rows
+    return [
+        {
+            "name": "pre_publish_non_empty_batch",
+            "passed": rows_read > 0,
+            "observed": f"rows_read={rows_read}",
+            "threshold": "rows_read > 0",
+        },
+        {
+            "name": "pre_publish_row_accounting",
+            "passed": rows_read == accounted,
+            "observed": (
+                f"read={rows_read}; rejected={rows_rejected}; "
+                f"duplicated={rows_duplicated}; cleaned={cleaned_rows}; sum={accounted}"
+            ),
+            "threshold": "read = rejected + duplicated + cleaned",
+        },
+        {
+            "name": "pre_publish_rejection_rate",
+            "passed": rows_read > 0 and rejection_rate <= max_rejection_rate,
+            "observed": f"{rejection_rate:.4f} ({rows_rejected}/{rows_read})",
+            "threshold": f"<= {max_rejection_rate:.4f}",
+        },
+        {
+            "name": "pre_publish_duplicate_rate",
+            "passed": rows_read > 0 and duplicate_rate <= max_duplicate_rate,
+            "observed": f"{duplicate_rate:.4f} ({rows_duplicated}/{rows_read})",
+            "threshold": f"<= {max_duplicate_rate:.4f}",
+        },
+    ]
+
+
+def validate_cleaned_batch(*, source: str, batch_id: str) -> dict[str, Any]:
+    """Bloquea la publicacion si la capa cleaned incumple los umbrales."""
+    metrics = db.get_metrics(batch_id, source, layer="cleaned")
+    if metrics is None:
+        raise RuntimeError(
+            f"No hay metricas cleaned para batch={batch_id} source={source}."
+        )
+    manifest = db.query_df(
+        """
+        SELECT row_count FROM ops.batch_manifest
+        WHERE batch_id = %s AND source = %s AND layer = 'cleaned'
+        """,
+        (batch_id, source),
+    )
+    if manifest.empty:
+        raise RuntimeError(
+            f"No hay manifiesto cleaned para batch={batch_id} source={source}."
+        )
+    results = evaluate_cleaned_batch(
+        rows_read=_metric(metrics, "rows_read"),
+        rows_rejected=_metric(metrics, "rows_rejected"),
+        rows_duplicated=_metric(metrics, "rows_duplicated"),
+        cleaned_rows=int(manifest.iloc[0]["row_count"]),
+        max_rejection_rate=config.QUALITY_MAX_REJECTION_RATE,
+        max_duplicate_rate=config.QUALITY_MAX_DUPLICATE_RATE,
+    )
+    checks: list[dict[str, Any]] = []
+    with db.connection() as conn:
+        for item in results:
+            _add_check(
+                conn, checks, batch_id=batch_id, name=item["name"],
+                passed=item["passed"], observed=item["observed"],
+                threshold=item["threshold"],
+            )
+    failed = [check["check"] for check in checks if check["status"] != "pass"]
+    summary = {
+        "batch_id": batch_id,
+        "source": source,
+        "passed": not failed,
+        "checks": checks,
+        "failed": failed,
+    }
+    logger.info(
+        "Validacion previa %s/%s: %s", source, batch_id,
+        "PASS" if not failed else f"FAIL {failed}",
+    )
+    if failed:
+        raise RuntimeError(
+            "Validacion previa a publicar fallo; el lote NO se publico: "
+            + json.dumps(summary["failed"], ensure_ascii=False)
         )
     return summary
