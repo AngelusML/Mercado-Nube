@@ -1,22 +1,87 @@
+# Demo completa de Mercado Nube con UNA sola instruccion:
+#   .\scripts\run_demo.ps1
+#
+# 1. Si no existe .env, lo crea desde .env.example con secretos aleatorios
+#    (Fernet key, claves de PostgreSQL y de Airflow). .env nunca se versiona.
+# 2. Levanta el stack Docker y espera los healthchecks.
+# 3. Ejecuta la carga historica y los 7 lotes diarios (2026-10-20 a 2026-10-26).
+# 4. Ejecuta las consultas de negocio y guarda la evidencia.
+#
+# Es idempotente: si un lote ya esta publicado, se omite (usa -ForceDaily
+# o -IncludeHistorical para reprocesar).
 param(
     [switch]$SkipBuild,
     [switch]$SkipHistorical,
     [switch]$IncludeHistorical,
     [switch]$ForceDaily,
-    [switch]$SkipQueries
+    [switch]$SkipQueries,
+    [string]$StartDate = "2026-10-20",
+    [string]$EndDate = "2026-10-26"
 )
 
 $ErrorActionPreference = "Stop"
 $root = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $root
 
+function New-RandomSecret {
+    param([int]$Bytes = 24)
+    $buffer = New-Object byte[] $Bytes
+    [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($buffer)
+    return ([System.BitConverter]::ToString($buffer)).Replace("-", "").ToLower()
+}
+
+function New-FernetKey {
+    $buffer = New-Object byte[] 32
+    [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($buffer)
+    return [Convert]::ToBase64String($buffer).Replace("+", "-").Replace("/", "_")
+}
+
+function Set-EnvValue {
+    param([string[]]$Lines, [string]$Key, [string]$Value)
+    $found = $false
+    for ($i = 0; $i -lt $Lines.Count; $i++) {
+        if ($Lines[$i] -match "^$Key=") {
+            $Lines[$i] = "$Key=$Value"
+            $found = $true
+        }
+    }
+    if (-not $found) { $Lines += "$Key=$Value" }
+    return ,$Lines
+}
+
+function Get-EnvValue {
+    param([string]$Key, [string]$Default = "")
+    $line = Get-Content ".env" | Where-Object { $_ -match "^$Key=" } | Select-Object -First 1
+    if (-not $line) { return $Default }
+    $value = $line.Substring($Key.Length + 1).Trim()
+    if ($value) { return $value } else { return $Default }
+}
+
+if (-not (Test-Path ".env")) {
+    Write-Host "No existe .env: se crea desde .env.example con secretos aleatorios..." -ForegroundColor Cyan
+    $lines = Get-Content ".env.example"
+    $lines = Set-EnvValue $lines "POSTGRES_ADMIN_PASSWORD" (New-RandomSecret)
+    $lines = Set-EnvValue $lines "AIRFLOW_DB_PASSWORD" (New-RandomSecret)
+    $lines = Set-EnvValue $lines "WAREHOUSE_PASSWORD" (New-RandomSecret)
+    $lines = Set-EnvValue $lines "AIRFLOW_ADMIN_PASSWORD" (New-RandomSecret 12)
+    $lines = Set-EnvValue $lines "AIRFLOW_FERNET_KEY" (New-FernetKey)
+    $lines = Set-EnvValue $lines "AIRFLOW_SECRET_KEY" (New-RandomSecret 32)
+    $lines | Set-Content -Encoding ASCII ".env"
+    Write-Host ".env creado (excluido de Git)." -ForegroundColor Green
+}
+
+$adminUser = Get-EnvValue "POSTGRES_ADMIN_USER" "mn_admin"
+$airflowUser = Get-EnvValue "AIRFLOW_ADMIN_USER" "admin"
+$airflowPort = Get-EnvValue "AIRFLOW_HOST_PORT" "8088"
+
 function Wait-Container {
     param([string]$Name, [int]$TimeoutSeconds = 300)
 
     $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
     while ((Get-Date) -lt $deadline) {
-        $status = (docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' $Name 2>$null).Trim()
-        if ($status -eq "healthy" -or $status -eq "running") { return }
+        $status = (docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' $Name 2>$null)
+        if ($status) { $status = $status.Trim() }
+        if ($status -eq "healthy" -or ($status -eq "running" -and $Name -eq "mn_moto")) { return }
         Write-Host "  $Name => $status (esperando...)"
         Start-Sleep -Seconds 5
     }
@@ -24,11 +89,12 @@ function Wait-Container {
 }
 
 function Wait-DagRun {
-    param([string]$DagId, [string]$RunId, [int]$TimeoutSeconds = 900)
+    param([string]$DagId, [string]$RunId, [int]$TimeoutSeconds = 1200)
 
     $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
     while ((Get-Date) -lt $deadline) {
-        $state = (docker exec mn_postgres psql -U mn_admin -d airflow -tAc "SELECT state FROM dag_run WHERE dag_id = '$DagId' AND run_id = '$RunId';").Trim()
+        $state = (docker exec mn_postgres psql -U $adminUser -d airflow -tAc "SELECT state FROM dag_run WHERE dag_id = '$DagId' AND run_id = '$RunId';")
+        if ($state) { $state = $state.Trim() }
         Write-Host "  $DagId / $RunId => $state"
         if ($state -eq "success") { return }
         if ($state -eq "failed") { throw "DAG $DagId fallo (run_id=$RunId). Revisa la UI o los logs." }
@@ -68,7 +134,11 @@ if (-not $SkipHistorical) {
     }
 }
 
-foreach ($date in @("2026-10-22", "2026-10-23", "2026-10-24")) {
+$current = [datetime]::ParseExact($StartDate, "yyyy-MM-dd", $null)
+$last = [datetime]::ParseExact($EndDate, "yyyy-MM-dd", $null)
+while ($current -le $last) {
+    $date = $current.ToString("yyyy-MM-dd")
+    $current = $current.AddDays(1)
     $batchId = "events_$date"
     $alreadyPublished = 0
     try {
@@ -91,4 +161,5 @@ if (-not $SkipQueries) {
     & (Join-Path $PSScriptRoot "run_queries.ps1")
 }
 
-Write-Host "Demo completada. Airflow: http://localhost:8088 (admin/admin123)" -ForegroundColor Green
+Write-Host "Demo completada. Airflow: http://localhost:$airflowPort" -ForegroundColor Green
+Write-Host "Usuario: $airflowUser  |  Clave: valor de AIRFLOW_ADMIN_PASSWORD en tu archivo .env (no se imprime por seguridad)" -ForegroundColor Green
