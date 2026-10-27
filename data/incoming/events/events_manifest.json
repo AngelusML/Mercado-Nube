@@ -1,0 +1,69 @@
+{
+  "seed": 42,
+  "orders": 27000,
+  "date_start": "2026-10-20",
+  "date_end": "2026-10-26",
+  "event_types": [
+    "created",
+    "paid",
+    "cancelled",
+    "refunded"
+  ],
+  "base_events": 53783,
+  "duplicates": 537,
+  "conflicts": 5,
+  "invalid": 80,
+  "files": [
+    {
+      "ingest_date": "2026-10-20",
+      "file": "data\\incoming\\events\\ingest_date=2026-10-20\\events.jsonl",
+      "rows": 8488,
+      "sha256": "17712e537d52d5f7d09bf0f23fb9588fa33a3a704427cd38986b2a032808595d"
+    },
+    {
+      "ingest_date": "2026-10-21",
+      "file": "data\\incoming\\events\\ingest_date=2026-10-21\\events.jsonl",
+      "rows": 12277,
+      "sha256": "5bb6adb778b48fc8e53365b4705a8641949b634659e76bc0a8d30ed30ebc3adc"
+    },
+    {
+      "ingest_date": "2026-10-22",
+      "file": "data\\incoming\\events\\ingest_date=2026-10-22\\events.jsonl",
+      "rows": 13347,
+      "sha256": "24fb0103e288d2fdb6d48d9095559b37ad251dab932023100c7f9c7bf118af3f"
+    },
+    {
+      "ingest_date": "2026-10-23",
+      "file": "data\\incoming\\events\\ingest_date=2026-10-23\\events.jsonl",
+      "rows": 13454,
+      "sha256": "e0efb21a513c5752dbcee078293404d893d82fb89bc694563bde523f3a408dc3"
+    },
+    {
+      "ingest_date": "2026-10-24",
+      "file": "data\\incoming\\events\\ingest_date=2026-10-24\\events.jsonl",
+      "rows": 5106,
+      "sha256": "c0aa022836ada4062399794ee54518b310005afb300fb52b47733db4e536fc96"
+    },
+    {
+      "ingest_date": "2026-10-25",
+      "file": "data\\incoming\\events\\ingest_date=2026-10-25\\events.jsonl",
+      "rows": 1307,
+      "sha256": "c6822bf7a3d7241d305aea8399f874c2eb6ce99a34c6b90fcdd742da24f19871"
+    },
+    {
+      "ingest_date": "2026-10-26",
+      "file": "data\\incoming\\events\\ingest_date=2026-10-26\\events.jsonl",
+      "rows": 426,
+      "sha256": "0bc0e3c22eb4bbff10cf98fb6f71d18d4abcabbd772d4ece289d0e3d02bc9849"
+    }
+  ],
+  "total_rows": 54405,
+  "event_type_counts": {
+    "INVALID": 8,
+    "cancelled": 2139,
+    "created": 27361,
+    "mystery": 8,
+    "paid": 23310,
+    "refunded": 1579
+  }
+}

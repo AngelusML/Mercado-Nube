@@ -1,0 +1,14 @@
+{
+  "source_file": "online_retail_II.xlsx",
+  "source_sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
+  "source_url": "https://archive.ics.uci.edu/dataset/502/online+retail+ii",
+  "source_reference": "https://www.kaggle.com/datasets/thedevastator/online-retail-transaction-dataset",
+  "license_note": "Ver licenses/README en UCI/Kaggle. Uso academico.",
+  "sheet": "Year 2010-2011",
+  "rows_seen": 541910,
+  "rows_written": 541910,
+  "started_at_utc": "2026-10-26T20:36:44Z",
+  "finished_at_utc": "2026-10-26T20:37:38Z",
+  "output_file": "online_retail_2010_2011.csv",
+  "output_sha256": "efa7d65039a99b5f449e0df90015452b4ad44df548086bdef7613ce1e941f17e"
+}

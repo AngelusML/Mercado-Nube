@@ -1,0 +1,13 @@
+.git
+.env
+.venv
+__pycache__
+*.py[cod]
+data
+docs
+tests
+dags
+logs
+airflow_logs
+.terraform
+*.tfstate*

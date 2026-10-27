@@ -1,0 +1,42 @@
+country_code,country_name,region
+GB,United Kingdom,Europe
+DE,Germany,Europe
+FR,France,Europe
+IE,Ireland,Europe
+ES,Spain,Europe
+NL,Netherlands,Europe
+BE,Belgium,Europe
+CH,Switzerland,Europe
+PT,Portugal,Europe
+AU,Australia,Oceania
+NO,Norway,Europe
+IT,Italy,Europe
+JE,Channel Islands,Europe
+FI,Finland,Europe
+CY,Cyprus,Europe
+SE,Sweden,Europe
+ZZ,Unknown,Unknown
+AT,Austria,Europe
+DK,Denmark,Europe
+JP,Japan,Asia
+PL,Poland,Europe
+IL,Israel,Middle East
+US,United States,North America
+HK,Hong Kong,Asia
+SG,Singapore,Asia
+IS,Iceland,Europe
+CA,Canada,North America
+GR,Greece,Europe
+MT,Malta,Europe
+AE,United Arab Emirates,Middle East
+EU,European Community,Europe
+ZA,South Africa,Africa
+LB,Lebanon,Middle East
+LT,Lithuania,Europe
+BR,Brazil,South America
+CZ,Czech Republic,Europe
+BH,Bahrain,Middle East
+SA,Saudi Arabia,Middle East
+CO,Colombia,South America
+MX,Mexico,North America
+PE,Peru,South America

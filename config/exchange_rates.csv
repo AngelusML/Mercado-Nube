@@ -1,0 +1,18 @@
+rate_date,from_currency,to_currency,rate,source_note
+2010-01-01,GBP,USD,1.55,DEMO - no es cotizacion real
+2010-01-01,EUR,USD,1.40,DEMO - no es cotizacion real
+2010-01-01,USD,USD,1.00,DEMO - no es cotizacion real
+2011-01-01,GBP,USD,1.60,DEMO - no es cotizacion real
+2011-01-01,EUR,USD,1.30,DEMO - no es cotizacion real
+2026-01-01,GBP,USD,1.27,DEMO - no es cotizacion real
+2026-01-01,EUR,USD,1.08,DEMO - no es cotizacion real
+2026-01-01,COP,USD,0.00025,DEMO - no es cotizacion real
+2026-01-01,MXN,USD,0.055,DEMO - no es cotizacion real
+2026-01-01,PEN,USD,0.27,DEMO - no es cotizacion real
+2026-01-01,USD,USD,1.00,DEMO - no es cotizacion real
+2026-10-21,GBP,USD,1.28,DEMO - no es cotizacion real
+2026-10-21,EUR,USD,1.09,DEMO - no es cotizacion real
+2026-10-21,COP,USD,0.00024,DEMO - no es cotizacion real
+2026-10-21,MXN,USD,0.052,DEMO - no es cotizacion real
+2026-10-21,PEN,USD,0.265,DEMO - no es cotizacion real
+2026-10-21,USD,USD,1.00,DEMO - no es cotizacion real

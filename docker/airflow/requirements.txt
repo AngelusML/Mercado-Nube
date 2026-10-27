@@ -1,0 +1,9 @@
+pandas==2.2.3
+pyarrow==18.1.0
+boto3==1.35.76
+psycopg2-binary==2.9.10
+requests==2.32.3
+tenacity==9.0.0
+PyYAML==6.0.2
+pytest==8.3.4
+tzdata==2024.2

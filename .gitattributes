@@ -1,0 +1,6 @@
+# Mantener scripts compatibles con Linux dentro de Docker
+*.sh text eol=lf
+*.ps1 text eol=crlf
+
+# Los datos tienen checksums SHA-256: no deben sufrir conversión de saltos de línea
+data/** -text

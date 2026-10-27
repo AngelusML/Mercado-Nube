@@ -1,0 +1,7 @@
+=== TERRAFORM FMT -CHECK ===
+fmt_exit=0 (0 = formato correcto)
+=== TERRAFORM VALIDATE (AWS provider 5.100.0) ===
+Success! The configuration is valid.
+
+
+validate_exit=0

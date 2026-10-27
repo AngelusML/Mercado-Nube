@@ -1,0 +1,29 @@
+# Secretos locales
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Airflow / Terraform
+airflow_logs/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+crash.log
+
+# Documentos internos (solo locales)
+docs/README-original.md
+docs/guia_fases.md
+docs/defensa.md
+Simulacro Prueba Tecnica Cohorte 6 Avanzado AWS.docx
+
+# Sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,3 @@
+=== PRUEBA SSE-S3 LOCAL (Moto) ===
+ServerSideEncryption= AES256
+objeto temporal eliminado

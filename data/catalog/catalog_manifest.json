@@ -1,0 +1,27 @@
+{
+  "source_historical": "data\\incoming\\historical\\online_retail_2010_2011.csv",
+  "source_sha256": "efa7d65039a99b5f449e0df90015452b4ad44df548086bdef7613ce1e941f17e",
+  "seed": 42,
+  "generated_at": "2026-10-21T00:00:00Z",
+  "product_count": 3958,
+  "versions": [
+    {
+      "version": 1,
+      "file": "catalog_v1.json",
+      "sha256": "3df46de9d377c9bc392e4bead06446eaf36e62960a8edeabbe764b61e9217b36",
+      "product_count": 3958
+    },
+    {
+      "version": 2,
+      "file": "catalog_v2.json",
+      "sha256": "77740f35f3d2012d96a5f5ea5addd74de77b4aa3ebcb867cda24471d06e73896",
+      "product_count": 3958
+    },
+    {
+      "version": 3,
+      "file": "catalog_v3.json",
+      "sha256": "9c8312f7bb1ba22e5b5270223831ec8debe9c98cb8323c26c387fcc77e1ecaf7",
+      "product_count": 3958
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+currency_code,currency_name,is_reporting
+USD,US Dollar,true
+GBP,British Pound,false
+EUR,Euro,false
+COP,Colombian Peso,false
+MXN,Mexican Peso,false
+PEN,Peruvian Sol,false
+XXX,Unknown,false
