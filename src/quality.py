@@ -22,6 +22,8 @@ from src import config
 
 CONFIG_DIR = config.PROJECT_ROOT / "config"
 EVENT_TYPES = {"created", "paid", "cancelled", "refunded"}
+# Moneda local esperada para los paises donde opera Mercado Nube.
+EXPECTED_CURRENCY_BY_COUNTRY = {"CO": "COP", "MX": "MXN", "PE": "PEN"}
 
 QUARANTINE_COLUMNS = [
     "quarantine_key",
@@ -563,6 +565,18 @@ def validate_events_frame(
         df["currency_code"].isna(),
         "invalid_currency",
         "currency no permitida o vacia",
+    )
+    # Coherencia pais-moneda: un pedido de CO/MX/PE debe venir en su moneda
+    # local. No se "corrige" la moneda: el evento va a cuarentena.
+    expected_currency = df["country_code"].map(EXPECTED_CURRENCY_BY_COUNTRY)
+    _mark(
+        reason,
+        detail,
+        expected_currency.notna()
+        & df["currency_code"].notna()
+        & (df["currency_code"] != expected_currency),
+        "country_currency_mismatch",
+        "currency no corresponde al pais (CO=COP, MX=MXN, PE=PEN)",
     )
     _mark(
         reason,
