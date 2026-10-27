@@ -13,6 +13,7 @@ from typing import Any
 import pandas as pd
 
 from src import config, db
+from src import metrics as cw_metrics
 
 logger = logging.getLogger(__name__)
 
@@ -466,6 +467,7 @@ def run_pipeline_quality(
             for item in failed
         ],
     }
+    cw_metrics.emit_quality_result(ingest_date=ingest_date, passed=not failed)
     if failed:
         raise RuntimeError(
             "Quality gate fallo: " + json.dumps(summary["failed"], ensure_ascii=False)
@@ -568,6 +570,13 @@ def validate_cleaned_batch(*, source: str, batch_id: str) -> dict[str, Any]:
     logger.info(
         "Validacion previa %s/%s: %s", source, batch_id,
         "PASS" if not failed else f"FAIL {failed}",
+    )
+    cw_metrics.emit_batch_metrics(
+        source=source,
+        batch_id=batch_id,
+        rows_read=_metric(metrics, "rows_read"),
+        rows_rejected=_metric(metrics, "rows_rejected"),
+        rows_duplicated=_metric(metrics, "rows_duplicated"),
     )
     if failed:
         raise RuntimeError(
