@@ -5,342 +5,360 @@ Generado por scripts/run_queries.ps1. Montos en USD; tasas DEMO.
 ## 01_monthly_sales_by_country_currency.sql
 
 ```text
- year | month | month_name |     country_name     | currency_code | line_count | gross_usd  | returns_usd |  net_usd   
-------+-------+------------+----------------------+---------------+------------+------------+-------------+------------
- 2010 |    12 | December   | United Kingdom       | GBP           |      39359 | 1156460.23 |   110773.33 | 1045686.90
- 2010 |    12 | December   | Germany              | GBP           |        563 |   23569.23 |     1051.39 |   22517.84
- 2010 |    12 | December   | France               | GBP           |        439 |   14905.69 |       63.48 |   14842.21
- 2010 |    12 | December   | Ireland              | GBP           |        402 |   15551.98 |     1555.18 |   13996.80
- 2010 |    12 | December   | Netherlands          | GBP           |         72 |   13615.99 |        0.00 |   13615.99
- 2010 |    12 | December   | Japan                | GBP           |         65 |   11942.86 |        0.00 |   11942.86
- 2010 |    12 | December   | Norway               | GBP           |        147 |    5870.05 |        0.00 |    5870.05
- 2010 |    12 | December   | Sweden               | GBP           |         27 |    5943.17 |     1841.40 |    4101.77
- 2010 |    12 | December   | Portugal             | GBP           |        120 |    3782.14 |       92.77 |    3689.37
- 2010 |    12 | December   | Spain                | GBP           |         75 |    2857.89 |        0.00 |    2857.89
- 2010 |    12 | December   | Belgium              | GBP           |         95 |    2805.43 |        0.00 |    2805.43
- 2010 |    12 | December   | Lithuania            | GBP           |         35 |    2574.67 |        0.00 |    2574.67
- 2010 |    12 | December   | Cyprus               | GBP           |         82 |    2460.06 |        0.00 |    2460.06
- 2010 |    12 | December   | Switzerland          | GBP           |         49 |    2022.60 |        0.00 |    2022.60
- 2010 |    12 | December   | Denmark              | GBP           |         20 |    1986.34 |        0.00 |    1986.34
- 2010 |    12 | December   | Australia            | GBP           |         34 |    1496.33 |       43.01 |    1453.32
- 2010 |    12 | December   | Finland              | GBP           |         17 |    1383.84 |        0.00 |    1383.84
- 2010 |    12 | December   | Italy                | GBP           |         41 |    1257.88 |       26.35 |    1231.53
- 2010 |    12 | December   | Iceland              | GBP           |         31 |    1103.31 |        0.00 |    1103.31
- 2010 |    12 | December   | Channel Islands      | GBP           |         17 |     563.52 |        0.00 |     563.52
- 2010 |    12 | December   | Austria              | GBP           |          9 |     429.67 |       31.25 |     398.42
- 2010 |    12 | December   | Poland               | GBP           |          8 |     384.65 |        0.00 |     384.65
- 2010 |    12 | December   | Bahrain              | GBP           |          1 |     318.90 |        0.00 |     318.90
- 2010 |    12 | December   | Israel               | GBP           |          2 |       0.00 |      352.53 |    -352.53
- 2011 |     1 | January    | United Kingdom       | GBP           |      31518 |  895967.54 |   203168.66 |  692798.88
- 2011 |     1 | January    | Netherlands          | GBP           |        229 |   42577.79 |        0.00 |   42577.79
- 2011 |     1 | January    | Ireland              | GBP           |        189 |   35046.64 |      396.27 |   34650.37
- 2011 |     1 | January    | France               | GBP           |        675 |   28384.19 |      379.28 |   28004.91
- 2011 |     1 | January    | Germany              | GBP           |        825 |   27009.36 |      735.04 |   26274.32
- 2011 |     1 | January    | Australia            | GBP           |        127 |   14428.31 |        0.00 |   14428.31
- 2011 |     1 | January    | Spain                | GBP           |        385 |   16137.73 |     4652.08 |   11485.65
- 2011 |     1 | January    | Switzerland          | GBP           |        160 |    6769.96 |        0.00 |    6769.96
- 2011 |     1 | January    | Portugal             | GBP           |        122 |    6489.15 |       92.16 |    6396.99
- 2011 |     1 | January    | Sweden               | GBP           |         35 |    5578.11 |       64.00 |    5514.11
- 2011 |     1 | January    | Greece               | GBP           |         32 |    4257.98 |        0.00 |    4257.98
- 2011 |     1 | January    | Italy                | GBP           |        114 |    3844.02 |       65.84 |    3778.18
- 2011 |     1 | January    | Hong Kong            | GBP           |         53 |    3569.55 |        0.00 |    3569.55
- 2011 |     1 | January    | Singapore            | GBP           |         56 |    3284.89 |        0.00 |    3284.89
- 2011 |     1 | January    | Lebanon              | GBP           |         45 |    2710.21 |        0.00 |    2710.21
- 2011 |     1 | January    | Belgium              | GBP           |         63 |    1920.32 |       73.84 |    1846.48
- 2011 |     1 | January    | Finland              | GBP           |         11 |    1422.45 |        0.00 |    1422.45
- 2011 |     1 | January    | Channel Islands      | GBP           |         32 |    1080.93 |       48.80 |    1032.13
- 2011 |     1 | January    | Poland               | GBP           |         25 |     981.15 |        0.00 |     981.15
- 2011 |     1 | January    | Cyprus               | GBP           |         16 |     876.00 |        0.00 |     876.00
- 2011 |     1 | January    | Iceland              | GBP           |         29 |     760.62 |        0.00 |     760.62
- 2011 |     1 | January    | Israel               | GBP           |         14 |     607.74 |        0.00 |     607.74
- 2011 |     1 | January    | Japan                | GBP           |          4 |       0.00 |      175.68 |    -175.68
- 2011 |     1 | January    | Bahrain              | GBP           |          1 |       0.00 |      329.18 |    -329.18
- 2011 |     2 | February   | United Kingdom       | GBP           |      25015 |  686380.98 |    34767.90 |  651613.08
- 2011 |     2 | February   | Netherlands          | GBP           |        191 |   36819.02 |      127.68 |   36691.34
- 2011 |     2 | February   | Australia            | GBP           |         91 |   23512.66 |      108.72 |   23403.94
- 2011 |     2 | February   | Ireland              | GBP           |        438 |   19525.98 |     4119.36 |   15406.62
- 2011 |     2 | February   | Germany              | GBP           |        350 |   15329.67 |      978.90 |   14350.77
- 2011 |     2 | February   | France               | GBP           |        426 |   13625.56 |      123.28 |   13502.28
- 2011 |     2 | February   | Japan                | GBP           |         85 |    9249.25 |        0.00 |    9249.25
- 2011 |     2 | February   | Cyprus               | GBP           |        157 |    6934.78 |      513.10 |    6421.68
- 2011 |     2 | February   | Switzerland          | GBP           |        103 |    4247.88 |       19.60 |    4228.28
- 2011 |     2 | February   | Belgium              | GBP           |        120 |    3489.74 |       31.60 |    3458.14
- 2011 |     2 | February   | Spain                | GBP           |        100 |    3383.21 |       33.28 |    3349.93
- 2011 |     2 | February   | Channel Islands      | GBP           |         10 |    2855.53 |        0.00 |    2855.53
- 2011 |     2 | February   | Portugal             | GBP           |         57 |    1942.25 |        0.00 |    1942.25
- 2011 |     2 | February   | United Arab Emirates | GBP           |         30 |    1422.79 |        0.00 |    1422.79
- 2011 |     2 | February   | Israel               | GBP           |         16 |    1246.56 |        0.00 |    1246.56
- 2011 |     2 | February   | Norway               | GBP           |         32 |    1009.44 |        0.00 |    1009.44
- 2011 |     2 | February   | Poland               | GBP           |         28 |     966.48 |        0.00 |     966.48
- 2011 |     2 | February   | Czech Republic       | GBP           |         15 |     878.82 |        0.00 |     878.82
- 2011 |     2 | February   | Austria              | GBP           |         21 |     829.38 |        0.00 |     829.38
- 2011 |     2 | February   | Sweden               | GBP           |         12 |     815.20 |        0.00 |     815.20
- 2011 |     2 | February   | Denmark              | GBP           |         20 |     638.76 |        0.00 |     638.76
- 2011 |     2 | February   | Italy                | GBP           |         14 |     409.60 |        7.20 |     402.40
- 2011 |     2 | February   | Finland              | GBP           |         12 |     328.25 |        0.00 |     328.25
- 2011 |     2 | February   | Saudi Arabia         | GBP           |          9 |     233.47 |        0.00 |     233.47
- 2011 |     3 | March      | United Kingdom       | GBP           |      32930 |  935700.56 |    42163.04 |  893537.52
- 2011 |     3 | March      | Netherlands          | GBP           |        189 |   35866.35 |        0.00 |   35866.35
- 2011 |     3 | March      | Ireland              | GBP           |        565 |   35516.01 |     5462.84 |   30053.17
- 2011 |     3 | March      | Australia            | GBP           |        110 |   27558.34 |      269.92 |   27288.42
- 2011 |     3 | March      | France               | GBP           |        548 |   23335.87 |      116.24 |   23219.63
- 2011 |     3 | March      | Germany              | GBP           |        604 |   23028.29 |      356.27 |   22672.02
- 2011 |     3 | March      | Finland              | GBP           |        216 |    9498.88 |       19.52 |    9479.36
- 2011 |     3 | March      | Spain                | GBP           |        204 |    8581.04 |       58.40 |    8522.64
- 2011 |     3 | March      | Sweden               | GBP           |         36 |    7552.92 |      288.00 |    7264.92
- 2011 |     3 | March      | Denmark              | GBP           |         19 |    6366.38 |        0.00 |    6366.38
- 2011 |     3 | March      | Channel Islands      | GBP           |        182 |    5614.92 |        0.00 |    5614.92
- 2011 |     3 | March      | Belgium              | GBP           |        163 |    5363.18 |       29.44 |    5333.74
- 2011 |     3 | March      | Portugal             | GBP           |        114 |    4257.37 |        0.00 |    4257.37
- 2011 |     3 | March      | Switzerland          | GBP           |         58 |    2992.37 |        0.00 |    2992.37
- 2011 |     3 | March      | Italy                | GBP           |         85 |    2890.90 |       44.64 |    2846.26
- 2011 |     3 | March      | Austria              | GBP           |         18 |    2732.99 |        0.00 |    2732.99
- 2011 |     3 | March      | Cyprus               | GBP           |         48 |    1501.43 |        0.00 |    1501.43
- 2011 |     3 | March      | Greece               | GBP           |         22 |     619.70 |        0.00 |     619.70
- 2011 |     3 | March      | Norway               | GBP           |         33 |    2024.50 |     1537.01 |     487.49
- 2011 |     3 | March      | Poland               | GBP           |         12 |     508.46 |       23.02 |     485.44
- 2011 |     3 | March      | Canada               | GBP           |         10 |     224.86 |        0.00 |     224.86
- 2011 |     3 | March      | Hong Kong            | GBP           |          2 |    4134.02 |     4134.02 |       0.00
- 2011 |     3 | March      | Saudi Arabia         | GBP           |          1 |       0.00 |       23.60 |     -23.60
- 2011 |     3 | March      | Japan                | GBP           |         24 |      78.23 |      196.09 |    -117.86
- 2011 |     4 | April      | United Kingdom       | GBP           |      27563 |  761086.62 |    54820.56 |  706266.06
- 2011 |     4 | April      | Germany              | GBP           |        462 |   19704.86 |      563.48 |   19141.38
- 2011 |     4 | April      | Ireland              | GBP           |        306 |   12112.80 |        0.00 |   12112.80
- 2011 |     4 | April      | Japan                | GBP           |         55 |   10477.62 |     2682.67 |    7794.95
- 2011 |     4 | April      | France               | GBP           |        233 |    8847.35 |     2135.04 |    6712.31
- 2011 |     4 | April      | Netherlands          | GBP           |         24 |    4762.50 |        0.00 |    4762.50
- 2011 |     4 | April      | Singapore            | GBP           |         62 |   13135.31 |     9745.34 |    3389.97
- 2011 |     4 | April      | Belgium              | GBP           |        123 |    3183.16 |       56.53 |    3126.63
- 2011 |     4 | April      | Switzerland          | GBP           |         82 |    3323.11 |      407.60 |    2915.51
- 2011 |     4 | April      | Spain                | GBP           |         96 |    2857.05 |        0.00 |    2857.05
- 2011 |     4 | April      | Portugal             | GBP           |         77 |    2700.42 |        0.00 |    2700.42
- 2011 |     4 | April      | Finland              | GBP           |         43 |    2702.26 |       99.38 |    2602.88
- 2011 |     4 | April      | Hong Kong            | GBP           |         32 |    2463.43 |        0.00 |    2463.43
- 2011 |     4 | April      | Brazil               | GBP           |         32 |    1829.76 |        0.00 |    1829.76
- 2011 |     4 | April      | Sweden               | GBP           |         34 |    1294.56 |        0.00 |    1294.56
- 2011 |     4 | April      | Italy                | GBP           |         22 |    1180.53 |        0.00 |    1180.53
- 2011 |     4 | April      | Poland               | GBP           |         25 |    1129.35 |        0.00 |    1129.35
- 2011 |     4 | April      | Austria              | GBP           |         26 |    1089.25 |        0.00 |    1089.25
- 2011 |     4 | April      | Iceland              | GBP           |         24 |    1018.00 |        0.00 |    1018.00
- 2011 |     4 | April      | Greece               | GBP           |         31 |     975.60 |        0.00 |     975.60
- 2011 |     4 | April      | United States        | GBP           |         22 |     614.32 |        0.00 |     614.32
- 2011 |     4 | April      | Australia            | GBP           |         20 |    1234.56 |      701.12 |     533.44
- 2011 |     4 | April      | Unknown              | GBP           |         16 |     478.56 |        0.00 |     478.56
- 2011 |     4 | April      | Channel Islands      | GBP           |          9 |     468.80 |        0.00 |     468.80
- 2011 |     4 | April      | European Community   | GBP           |         11 |     306.24 |        0.00 |     306.24
- 2011 |     4 | April      | Israel               | GBP           |          6 |     176.00 |        0.00 |     176.00
- 2011 |     4 | April      | Cyprus               | GBP           |          2 |       0.00 |       57.28 |     -57.28
- 2011 |     4 | April      | Czech Republic       | GBP           |          2 |       0.00 |       92.02 |     -92.02
- 2011 |     5 | May        | United Kingdom       | GBP           |      33184 | 1020972.89 |    68567.20 |  952405.69
- 2011 |     5 | May        | Netherlands          | GBP           |        215 |   46697.37 |        0.00 |   46697.37
- 2011 |     5 | May        | Germany              | GBP           |        786 |   41175.52 |      287.77 |   40887.75
- 2011 |     5 | May        | Ireland              | GBP           |        616 |   28805.96 |      139.86 |   28666.10
- 2011 |     5 | May        | France               | GBP           |        727 |   28170.36 |      140.48 |   28029.88
- 2011 |     5 | May        | Australia            | GBP           |        117 |   21821.47 |       15.84 |   21805.63
- 2011 |     5 | May        | Switzerland          | GBP           |        153 |    5776.03 |       68.48 |    5707.55
- 2011 |     5 | May        | Spain                | GBP           |        105 |    5212.16 |        0.00 |    5212.16
- 2011 |     5 | May        | Belgium              | GBP           |        149 |    4371.81 |        8.64 |    4363.17
- 2011 |     5 | May        | Sweden               | GBP           |         21 |    4291.16 |       27.20 |    4263.96
- 2011 |     5 | May        | Hong Kong            | GBP           |         93 |    3145.85 |        0.00 |    3145.85
- 2011 |     5 | May        | Poland               | GBP           |         69 |    2435.80 |        0.00 |    2435.80
- 2011 |     5 | May        | Japan                | GBP           |         12 |    2162.31 |        0.00 |    2162.31
- 2011 |     5 | May        | Austria              | GBP           |         51 |    1999.09 |        0.00 |    1999.09
- 2011 |     5 | May        | Unknown              | GBP           |         58 |    1689.39 |        0.00 |    1689.39
- 2011 |     5 | May        | Channel Islands      | GBP           |         37 |    1931.58 |      485.52 |    1446.06
- 2011 |     5 | May        | Portugal             | GBP           |         85 |    6723.57 |     5783.04 |     940.53
- 2011 |     5 | May        | Italy                | GBP           |         23 |     939.92 |        0.00 |     939.92
- 2011 |     5 | May        | Bahrain              | GBP           |         17 |     877.44 |        0.00 |     877.44
- 2011 |     5 | May        | Canada               | GBP           |          1 |     854.78 |        0.00 |     854.78
- 2011 |     5 | May        | Denmark              | GBP           |         19 |     825.12 |        0.00 |     825.12
- 2011 |     6 | June       | United Kingdom       | GBP           |      32728 |  989358.12 |   104024.51 |  885333.61
- 2011 |     6 | June       | Netherlands          | GBP           |        325 |   42972.93 |       24.00 |   42948.93
- 2011 |     6 | June       | Australia            | GBP           |        171 |   40300.41 |       36.80 |   40263.61
- 2011 |     6 | June       | Ireland              | GBP           |        669 |   39781.77 |     7637.37 |   32144.40
- 2011 |     6 | June       | France               | GBP           |        610 |   26157.46 |      570.47 |   25586.99
- 2011 |     6 | June       | Germany              | GBP           |        674 |   21194.13 |      308.92 |   20885.21
- 2011 |     6 | June       | Switzerland          | GBP           |        129 |   12646.63 |       35.12 |   12611.51
- 2011 |     6 | June       | Norway               | GBP           |        166 |    9418.98 |        0.00 |    9418.98
- 2011 |     6 | June       | Belgium              | GBP           |        231 |    6839.73 |        2.64 |    6837.09
- 2011 |     6 | June       | Spain                | GBP           |        182 |    5333.13 |        1.23 |    5331.90
- 2011 |     6 | June       | Denmark              | GBP           |        106 |    5217.86 |        0.00 |    5217.86
- 2011 |     6 | June       | Channel Islands      | GBP           |         81 |    3296.05 |        0.00 |    3296.05
- 2011 |     6 | June       | Japan                | GBP           |          6 |    2571.26 |        0.00 |    2571.26
- 2011 |     6 | June       | Canada               | GBP           |         57 |    1874.35 |        0.00 |    1874.35
- 2011 |     6 | June       | Cyprus               | GBP           |         47 |    1774.91 |        0.00 |    1774.91
- 2011 |     6 | June       | Portugal             | GBP           |         49 |    1415.14 |        7.92 |    1407.22
- 2011 |     6 | June       | Malta                | GBP           |         47 |    1381.07 |       20.40 |    1360.67
- 2011 |     6 | June       | Sweden               | GBP           |         35 |    1331.20 |        0.00 |    1331.20
- 2011 |     6 | June       | Hong Kong            | GBP           |         16 |    1014.34 |        0.00 |    1014.34
- 2011 |     6 | June       | European Community   | GBP           |         21 |     691.28 |       13.60 |     677.68
- 2011 |     6 | June       | Iceland              | GBP           |         18 |     612.04 |        0.00 |     612.04
- 2011 |     6 | June       | Finland              | GBP           |         13 |     527.30 |        0.00 |     527.30
- 2011 |     6 | June       | Poland               | GBP           |         20 |     549.84 |      126.26 |     423.58
- 2011 |     6 | June       | Unknown              | GBP           |          9 |     297.25 |        0.00 |     297.25
- 2011 |     6 | June       | Italy                | GBP           |         13 |     323.32 |       63.68 |     259.64
- 2011 |     6 | June       | Austria              | GBP           |          2 |       0.00 |       38.72 |     -38.72
- 2011 |     7 | July       | United Kingdom       | GBP           |      35537 |  961476.35 |    58420.86 |  903055.49
- 2011 |     7 | July       | Ireland              | GBP           |        714 |   68382.15 |       78.72 |   68303.43
- 2011 |     7 | July       | Germany              | GBP           |        787 |   26305.52 |     1150.90 |   25154.62
- 2011 |     7 | July       | France               | GBP           |        453 |   16000.23 |      177.92 |   15822.31
- 2011 |     7 | July       | Spain                | GBP           |        178 |   12193.22 |       74.80 |   12118.42
- 2011 |     7 | July       | Sweden               | GBP           |         54 |   10883.32 |        0.00 |   10883.32
- 2011 |     7 | July       | Australia            | GBP           |        217 |    7943.02 |      314.91 |    7628.11
- 2011 |     7 | July       | Singapore            | GBP           |         75 |    6318.92 |        0.00 |    6318.92
- 2011 |     7 | July       | Japan                | GBP           |         39 |    6167.02 |        0.00 |    6167.02
- 2011 |     7 | July       | Switzerland          | GBP           |        177 |    6385.21 |      355.20 |    6030.01
- 2011 |     7 | July       | Finland              | GBP           |         83 |    4794.76 |        0.00 |    4794.76
- 2011 |     7 | July       | Belgium              | GBP           |        129 |    3960.91 |        3.12 |    3957.79
- 2011 |     7 | July       | Portugal             | GBP           |         89 |    3660.57 |        0.00 |    3660.57
- 2011 |     7 | July       | Canada               | GBP           |         78 |    2829.75 |        0.00 |    2829.75
- 2011 |     7 | July       | Israel               | GBP           |         27 |    2289.20 |        0.00 |    2289.20
- 2011 |     7 | July       | Unknown              | GBP           |        218 |    2270.59 |        0.00 |    2270.59
- 2011 |     7 | July       | Austria              | GBP           |         55 |    1907.12 |        0.00 |    1907.12
- 2011 |     7 | July       | Norway               | GBP           |         49 |    1424.12 |        0.00 |    1424.12
- 2011 |     7 | July       | Poland               | GBP           |         33 |    1099.68 |       14.16 |    1085.52
- 2011 |     7 | July       | European Community   | GBP           |         29 |    1082.88 |        0.00 |    1082.88
- 2011 |     7 | July       | Denmark              | GBP           |         17 |     601.99 |        0.00 |     601.99
- 2011 |     7 | July       | Greece               | GBP           |         25 |     674.00 |       80.00 |     594.00
- 2011 |     7 | July       | Italy                | GBP           |          6 |     235.36 |        0.00 |     235.36
- 2011 |     7 | July       | Netherlands          | GBP           |         10 |      41.64 |        0.00 |      41.64
- 2011 |     8 | August     | United Kingdom       | GBP           |      30794 |  970860.61 |    74863.86 |  895996.75
- 2011 |     8 | August     | Netherlands          | GBP           |        280 |   64524.49 |     1075.20 |   63449.29
- 2011 |     8 | August     | Australia            | GBP           |        107 |   35982.70 |        0.00 |   35982.70
- 2011 |     8 | August     | Germany              | GBP           |        820 |   30753.27 |      315.39 |   30437.88
- 2011 |     8 | August     | France               | GBP           |        571 |   22097.49 |       34.72 |   22062.77
- 2011 |     8 | August     | Ireland              | GBP           |        708 |   29350.70 |     9914.05 |   19436.65
- 2011 |     8 | August     | Channel Islands      | GBP           |        140 |    7819.01 |        6.80 |    7812.21
- 2011 |     8 | August     | Switzerland          | GBP           |        277 |    7951.88 |      140.32 |    7811.56
- 2011 |     8 | August     | Israel               | GBP           |        171 |    7798.11 |        0.00 |    7798.11
- 2011 |     8 | August     | Belgium              | GBP           |        197 |    5686.47 |       28.64 |    5657.83
- 2011 |     8 | August     | Spain                | GBP           |        252 |    5347.83 |       26.40 |    5321.43
- 2011 |     8 | August     | Hong Kong            | GBP           |         49 |    4502.32 |        0.00 |    4502.32
- 2011 |     8 | August     | Norway               | GBP           |         81 |    3241.29 |       66.16 |    3175.13
- 2011 |     8 | August     | Italy                | GBP           |        101 |    3185.53 |       89.84 |    3095.69
- 2011 |     8 | August     | Austria              | GBP           |         88 |    2425.69 |        0.00 |    2425.69
- 2011 |     8 | August     | Sweden               | GBP           |         40 |    2224.58 |       15.84 |    2208.74
- 2011 |     8 | August     | Finland              | GBP           |         62 |    2202.40 |        7.92 |    2194.48
- 2011 |     8 | August     | Portugal             | GBP           |         42 |    1954.24 |       24.00 |    1930.24
- 2011 |     8 | August     | Malta                | GBP           |         57 |    1790.39 |       25.20 |    1765.19
- 2011 |     8 | August     | Iceland              | GBP           |         22 |     935.86 |        0.00 |     935.86
- 2011 |     8 | August     | Unknown              | GBP           |         23 |     849.66 |        0.00 |     849.66
- 2011 |     8 | August     | Poland               | GBP           |         17 |     642.88 |        0.00 |     642.88
- 2011 |     8 | August     | Denmark              | GBP           |         19 |     341.04 |      215.28 |     125.76
- 2011 |     8 | August     | Canada               | GBP           |          5 |      82.49 |        0.00 |      82.49
- 2011 |     8 | August     | Japan                | GBP           |          8 |       0.00 |       79.66 |     -79.66
- 2011 |     9 | September  | United Kingdom       | GBP           |      45013 | 1432164.79 |    55990.81 | 1376173.98
- 2011 |     9 | September  | Ireland              | GBP           |       1213 |   68677.98 |      716.00 |   67961.98
- 2011 |     9 | September  | Netherlands          | GBP           |        242 |   43099.57 |        0.00 |   43099.57
- 2011 |     9 | September  | France               | GBP           |       1055 |   37484.86 |      366.67 |   37118.19
- 2011 |     9 | September  | Germany              | GBP           |        805 |   28927.22 |      593.45 |   28333.77
- 2011 |     9 | September  | Norway               | GBP           |        202 |   13886.30 |        0.00 |   13886.30
- 2011 |     9 | September  | Switzerland          | GBP           |        199 |   13255.77 |       47.85 |   13207.92
- 2011 |     9 | September  | Spain                | GBP           |        244 |    8302.80 |       40.80 |    8262.00
- 2011 |     9 | September  | Australia            | GBP           |        104 |    8170.75 |      120.00 |    8050.75
- 2011 |     9 | September  | Sweden               | GBP           |         38 |    7320.33 |        0.00 |    7320.33
- 2011 |     9 | September  | Denmark              | GBP           |         46 |    7312.27 |        0.00 |    7312.27
- 2011 |     9 | September  | Belgium              | GBP           |        185 |    6732.82 |       16.32 |    6716.50
- 2011 |     9 | September  | Portugal             | GBP           |         74 |    2293.15 |        0.00 |    2293.15
- 2011 |     9 | September  | Channel Islands      | GBP           |         66 |    2118.02 |        3.36 |    2114.66
- 2011 |     9 | September  | Finland              | GBP           |         33 |    1768.72 |        0.00 |    1768.72
- 2011 |     9 | September  | United Arab Emirates | GBP           |         38 |    1620.84 |        0.00 |    1620.84
- 2011 |     9 | September  | Poland               | GBP           |         30 |     846.81 |        0.00 |     846.81
- 2011 |     9 | September  | Israel               | GBP           |         27 |     677.97 |        0.00 |     677.97
- 2011 |     9 | September  | Unknown              | GBP           |         65 |     454.84 |        0.00 |     454.84
- 2011 |     9 | September  | Italy                | GBP           |         15 |     447.68 |        0.00 |     447.68
- 2011 |     9 | September  | Cyprus               | GBP           |          1 |     314.16 |        0.00 |     314.16
- 2011 |     9 | September  | Japan                | GBP           |          4 |     179.33 |        0.00 |     179.33
- 2011 |     9 | September  | Hong Kong            | GBP           |          2 |    4246.32 |     4246.32 |       0.00
- 2011 |    10 | October    | United Kingdom       | GBP           |      53537 | 1496652.05 |    94652.34 | 1401999.71
- 2011 |    10 | October    | Netherlands          | GBP           |        278 |   65133.80 |        0.00 |   65133.80
- 2011 |    10 | October    | Germany              | GBP           |       1321 |   50605.58 |     1638.65 |   48966.93
- 2011 |    10 | October    | France               | GBP           |        892 |   53553.76 |    13525.46 |   40028.30
- 2011 |    10 | October    | Ireland              | GBP           |        928 |   38884.76 |     1616.48 |   37268.28
- 2011 |    10 | October    | Australia            | GBP           |        114 |   27440.84 |        0.00 |   27440.84
- 2011 |    10 | October    | Switzerland          | GBP           |        380 |   12881.22 |       49.92 |   12831.30
- 2011 |    10 | October    | Sweden               | GBP           |         47 |    9225.88 |        0.00 |    9225.88
- 2011 |    10 | October    | Belgium              | GBP           |        267 |    9096.61 |       54.40 |    9042.21
- 2011 |    10 | October    | Portugal             | GBP           |        436 |    9894.75 |      995.26 |    8899.49
- 2011 |    10 | October    | Spain                | GBP           |        323 |   13819.13 |     5693.26 |    8125.87
- 2011 |    10 | October    | Cyprus               | GBP           |        161 |    6960.53 |      314.16 |    6646.37
- 2011 |    10 | October    | Norway               | GBP           |        120 |    5899.57 |        0.00 |    5899.57
- 2011 |    10 | October    | Italy                | GBP           |        169 |    5583.51 |      126.24 |    5457.27
- 2011 |    10 | October    | Finland              | GBP           |        115 |    4515.42 |       28.80 |    4486.62
- 2011 |    10 | October    | Channel Islands      | GBP           |        102 |    4197.32 |        0.00 |    4197.32
- 2011 |    10 | October    | Japan                | GBP           |         16 |    3116.86 |        0.00 |    3116.86
- 2011 |    10 | October    | Denmark              | GBP           |         29 |    2385.21 |       84.24 |    2300.97
- 2011 |    10 | October    | Iceland              | GBP           |         47 |    2070.92 |        0.00 |    2070.92
- 2011 |    10 | October    | Austria              | GBP           |         54 |    1670.04 |        0.00 |    1670.04
- 2011 |    10 | October    | South Africa         | GBP           |         57 |    1603.69 |        0.00 |    1603.69
- 2011 |    10 | October    | Singapore            | GBP           |         36 |   11307.70 |     9708.89 |    1598.81
- 2011 |    10 | October    | United States        | GBP           |        226 |    3697.92 |     2527.21 |    1170.71
- 2011 |    10 | October    | Hong Kong            | GBP           |         35 |    1175.24 |       17.52 |    1157.72
- 2011 |    10 | October    | Czech Republic       | GBP           |         10 |     443.97 |        0.00 |     443.97
- 2011 |    10 | October    | Israel               | GBP           |         31 |     211.50 |        0.00 |     211.50
- 2011 |    11 | November   | United Kingdom       | GBP           |      77035 | 2111904.25 |    68038.79 | 2043865.46
- 2011 |    11 | November   | France               | GBP           |       1572 |   50714.24 |     1693.20 |   49021.04
- 2011 |    11 | November   | Ireland              | GBP           |       1097 |   49141.62 |      520.61 |   48621.01
- 2011 |    11 | November   | Germany              | GBP           |       1141 |   44748.37 |     3169.08 |   41579.29
- 2011 |    11 | November   | Netherlands          | GBP           |        226 |   41398.41 |       28.80 |   41369.61
- 2011 |    11 | November   | Spain                | GBP           |        312 |   13870.54 |      232.14 |   13638.40
- 2011 |    11 | November   | Japan                | GBP           |         32 |   13536.13 |        0.00 |   13536.13
- 2011 |    11 | November   | Switzerland          | GBP           |        226 |   12990.38 |        3.20 |   12987.18
- 2011 |    11 | November   | Australia            | GBP           |         43 |   11588.34 |      698.77 |   10889.57
- 2011 |    11 | November   | Norway               | GBP           |        182 |   10444.01 |        0.00 |   10444.01
- 2011 |    11 | November   | Belgium              | GBP           |        249 |   10105.22 |      138.16 |    9967.06
- 2011 |    11 | November   | Italy                | GBP           |        192 |    7313.74 |      523.73 |    6790.01
- 2011 |    11 | November   | Finland              | GBP           |         76 |    4912.41 |      192.00 |    4720.41
- 2011 |    11 | November   | Denmark              | GBP           |         83 |    4319.33 |        0.00 |    4319.33
- 2011 |    11 | November   | Sweden               | GBP           |         80 |    4355.58 |      175.23 |    4180.35
- 2011 |    11 | November   | Portugal             | GBP           |        143 |    4165.28 |        0.00 |    4165.28
- 2011 |    11 | November   | Channel Islands      | GBP           |         75 |    2423.64 |       31.36 |    2392.28
- 2011 |    11 | November   | Poland               | GBP           |         74 |    2177.98 |       30.98 |    2147.00
- 2011 |    11 | November   | Austria              | GBP           |         70 |    2127.65 |        0.00 |    2127.65
- 2011 |    11 | November   | Unknown              | GBP           |         53 |    1545.20 |        0.00 |    1545.20
- 2011 |    11 | November   | Malta                | GBP           |         18 |    1189.48 |      257.30 |     932.18
- 2011 |    11 | November   | Cyprus               | GBP           |         93 |     703.47 |        0.00 |     703.47
- 2011 |    11 | November   | Hong Kong            | GBP           |          2 |     521.76 |      521.76 |       0.00
- 2011 |    11 | November   | Czech Republic       | GBP           |          3 |       0.00 |       98.42 |     -98.42
- 2011 |    12 | December   | United Kingdom       | GBP           |      23593 |  946595.43 |   326162.01 |  620433.42
- 2011 |    12 | December   | Netherlands          | GBP           |         86 |   18764.80 |        0.00 |   18764.80
- 2011 |    12 | December   | Germany              | GBP           |        340 |   12774.68 |      287.15 |   12487.53
- 2011 |    12 | December   | Ireland              | GBP           |        335 |   11745.52 |       28.56 |   11716.96
- 2011 |    12 | December   | France               | GBP           |        340 |   11671.81 |      364.93 |   11306.88
- 2011 |    12 | December   | Portugal             | GBP           |        102 |    4493.15 |        9.98 |    4483.17
- 2011 |    12 | December   | Norway               | GBP           |         73 |    4457.13 |        0.00 |    4457.13
- 2011 |    12 | December   | Belgium              | GBP           |         98 |    2268.34 |       13.28 |    2255.06
- 2011 |    12 | December   | Finland              | GBP           |         14 |    1972.41 |        3.33 |    1969.08
- 2011 |    12 | December   | Austria              | GBP           |          7 |    1093.12 |        0.00 |    1093.12
- 2011 |    12 | December   | Greece               | GBP           |         36 |    1089.57 |        0.00 |    1089.57
- 2011 |    12 | December   | United States        | GBP           |         43 |    1416.36 |      431.92 |     984.44
- 2011 |    12 | December   | Spain                | GBP           |         71 |     505.95 |       71.65 |     434.30
- 2011 |    12 | December   | Iceland              | GBP           |         11 |     359.72 |        0.00 |     359.72
- 2011 |    12 | December   | Italy                | GBP           |          8 |     320.72 |        0.00 |     320.72
- 2011 |    12 | December   | Channel Islands      | GBP           |          6 |     317.44 |        6.80 |     310.64
- 2011 |    12 | December   | Denmark              | GBP           |         11 |     270.24 |        0.00 |     270.24
- 2011 |    12 | December   | Sweden               | GBP           |          2 |     380.80 |      380.80 |       0.00
- 2011 |    12 | December   | Malta                | GBP           |          5 |       0.00 |       49.30 |     -49.30
- 2011 |    12 | December   | Cyprus               | GBP           |          4 |       0.00 |      146.00 |    -146.00
- 2011 |    12 | December   | Japan                | GBP           |          8 |       0.00 |      187.09 |    -187.09
-(314 rows)
+ year | month |   source   | country_code |     country_name     | original_currency | reporting_currency | sale_movements | return_movements | gross_usd  | returns_usd |  net_usd   | return_rate_pct 
+------+-------+------------+--------------+----------------------+-------------------+--------------------+----------------+------------------+------------+-------------+------------+-----------------
+ 2010 |    12 | historical | GB           | United Kingdom       | GBP               | USD                |          38738 |              621 | 1156460.23 |   110773.33 | 1045686.90 |            9.58
+ 2010 |    12 | historical | DE           | Germany              | GBP               | USD                |            511 |               52 |   23569.23 |     1051.39 |   22517.84 |            4.46
+ 2010 |    12 | historical | FR           | France               | GBP               | USD                |            434 |                5 |   14905.69 |       63.48 |   14842.21 |            0.43
+ 2010 |    12 | historical | IE           | Ireland              | GBP               | USD                |            373 |               29 |   15551.98 |     1555.18 |   13996.80 |           10.00
+ 2010 |    12 | historical | NL           | Netherlands          | GBP               | USD                |             72 |                0 |   13615.99 |        0.00 |   13615.99 |            0.00
+ 2010 |    12 | historical | JP           | Japan                | GBP               | USD                |             65 |                0 |   11942.86 |        0.00 |   11942.86 |            0.00
+ 2010 |    12 | historical | NO           | Norway               | GBP               | USD                |            147 |                0 |    5870.05 |        0.00 |    5870.05 |            0.00
+ 2010 |    12 | historical | SE           | Sweden               | GBP               | USD                |             26 |                1 |    5943.17 |     1841.40 |    4101.77 |           30.98
+ 2010 |    12 | historical | PT           | Portugal             | GBP               | USD                |            116 |                4 |    3782.14 |       92.77 |    3689.37 |            2.45
+ 2010 |    12 | historical | ES           | Spain                | GBP               | USD                |             75 |                0 |    2857.89 |        0.00 |    2857.89 |            0.00
+ 2010 |    12 | historical | BE           | Belgium              | GBP               | USD                |             95 |                0 |    2805.43 |        0.00 |    2805.43 |            0.00
+ 2010 |    12 | historical | LT           | Lithuania            | GBP               | USD                |             35 |                0 |    2574.67 |        0.00 |    2574.67 |            0.00
+ 2010 |    12 | historical | CY           | Cyprus               | GBP               | USD                |             82 |                0 |    2460.06 |        0.00 |    2460.06 |            0.00
+ 2010 |    12 | historical | CH           | Switzerland          | GBP               | USD                |             49 |                0 |    2022.60 |        0.00 |    2022.60 |            0.00
+ 2010 |    12 | historical | DK           | Denmark              | GBP               | USD                |             20 |                0 |    1986.34 |        0.00 |    1986.34 |            0.00
+ 2010 |    12 | historical | AU           | Australia            | GBP               | USD                |             31 |                3 |    1496.33 |       43.01 |    1453.32 |            2.87
+ 2010 |    12 | historical | FI           | Finland              | GBP               | USD                |             17 |                0 |    1383.84 |        0.00 |    1383.84 |            0.00
+ 2010 |    12 | historical | IT           | Italy                | GBP               | USD                |             40 |                1 |    1257.88 |       26.35 |    1231.53 |            2.09
+ 2010 |    12 | historical | IS           | Iceland              | GBP               | USD                |             31 |                0 |    1103.31 |        0.00 |    1103.31 |            0.00
+ 2010 |    12 | historical | JE           | Channel Islands      | GBP               | USD                |             17 |                0 |     563.52 |        0.00 |     563.52 |            0.00
+ 2010 |    12 | historical | AT           | Austria              | GBP               | USD                |              8 |                1 |     429.67 |       31.25 |     398.42 |            7.27
+ 2010 |    12 | historical | PL           | Poland               | GBP               | USD                |              8 |                0 |     384.65 |        0.00 |     384.65 |            0.00
+ 2010 |    12 | historical | BH           | Bahrain              | GBP               | USD                |              1 |                0 |     318.90 |        0.00 |     318.90 |            0.00
+ 2010 |    12 | historical | IL           | Israel               | GBP               | USD                |              0 |                2 |       0.00 |      352.53 |    -352.53 |                
+ 2011 |     1 | historical | GB           | United Kingdom       | GBP               | USD                |          30923 |              595 |  895967.54 |   203168.66 |  692798.88 |           22.68
+ 2011 |     1 | historical | NL           | Netherlands          | GBP               | USD                |            229 |                0 |   42577.79 |        0.00 |   42577.79 |            0.00
+ 2011 |     1 | historical | IE           | Ireland              | GBP               | USD                |            173 |               16 |   35046.64 |      396.27 |   34650.37 |            1.13
+ 2011 |     1 | historical | FR           | France               | GBP               | USD                |            660 |               15 |   28384.19 |      379.28 |   28004.91 |            1.34
+ 2011 |     1 | historical | DE           | Germany              | GBP               | USD                |            777 |               48 |   27009.36 |      735.04 |   26274.32 |            2.72
+ 2011 |     1 | historical | AU           | Australia            | GBP               | USD                |            127 |                0 |   14428.31 |        0.00 |   14428.31 |            0.00
+ 2011 |     1 | historical | ES           | Spain                | GBP               | USD                |            382 |                3 |   16137.73 |     4652.08 |   11485.65 |           28.83
+ 2011 |     1 | historical | CH           | Switzerland          | GBP               | USD                |            160 |                0 |    6769.96 |        0.00 |    6769.96 |            0.00
+ 2011 |     1 | historical | PT           | Portugal             | GBP               | USD                |            118 |                4 |    6489.15 |       92.16 |    6396.99 |            1.42
+ 2011 |     1 | historical | SE           | Sweden               | GBP               | USD                |             34 |                1 |    5578.11 |       64.00 |    5514.11 |            1.15
+ 2011 |     1 | historical | GR           | Greece               | GBP               | USD                |             32 |                0 |    4257.98 |        0.00 |    4257.98 |            0.00
+ 2011 |     1 | historical | IT           | Italy                | GBP               | USD                |            108 |                6 |    3844.02 |       65.84 |    3778.18 |            1.71
+ 2011 |     1 | historical | HK           | Hong Kong            | GBP               | USD                |             53 |                0 |    3569.55 |        0.00 |    3569.55 |            0.00
+ 2011 |     1 | historical | SG           | Singapore            | GBP               | USD                |             56 |                0 |    3284.89 |        0.00 |    3284.89 |            0.00
+ 2011 |     1 | historical | LB           | Lebanon              | GBP               | USD                |             45 |                0 |    2710.21 |        0.00 |    2710.21 |            0.00
+ 2011 |     1 | historical | BE           | Belgium              | GBP               | USD                |             58 |                5 |    1920.32 |       73.84 |    1846.48 |            3.85
+ 2011 |     1 | historical | FI           | Finland              | GBP               | USD                |             11 |                0 |    1422.45 |        0.00 |    1422.45 |            0.00
+ 2011 |     1 | historical | JE           | Channel Islands      | GBP               | USD                |             30 |                2 |    1080.93 |       48.80 |    1032.13 |            4.51
+ 2011 |     1 | historical | PL           | Poland               | GBP               | USD                |             25 |                0 |     981.15 |        0.00 |     981.15 |            0.00
+ 2011 |     1 | historical | CY           | Cyprus               | GBP               | USD                |             16 |                0 |     876.00 |        0.00 |     876.00 |            0.00
+ 2011 |     1 | historical | IS           | Iceland              | GBP               | USD                |             29 |                0 |     760.62 |        0.00 |     760.62 |            0.00
+ 2011 |     1 | historical | IL           | Israel               | GBP               | USD                |             14 |                0 |     607.74 |        0.00 |     607.74 |            0.00
+ 2011 |     1 | historical | JP           | Japan                | GBP               | USD                |              0 |                4 |       0.00 |      175.68 |    -175.68 |                
+ 2011 |     1 | historical | BH           | Bahrain              | GBP               | USD                |              0 |                1 |       0.00 |      329.18 |    -329.18 |                
+ 2011 |     2 | historical | GB           | United Kingdom       | GBP               | USD                |          24629 |              386 |  686380.98 |    34767.90 |  651613.08 |            5.07
+ 2011 |     2 | historical | NL           | Netherlands          | GBP               | USD                |            189 |                2 |   36819.02 |      127.68 |   36691.34 |            0.35
+ 2011 |     2 | historical | AU           | Australia            | GBP               | USD                |             89 |                2 |   23512.66 |      108.72 |   23403.94 |            0.46
+ 2011 |     2 | historical | IE           | Ireland              | GBP               | USD                |            430 |                8 |   19525.98 |     4119.36 |   15406.62 |           21.10
+ 2011 |     2 | historical | DE           | Germany              | GBP               | USD                |            296 |               54 |   15329.67 |      978.90 |   14350.77 |            6.39
+ 2011 |     2 | historical | FR           | France               | GBP               | USD                |            419 |                7 |   13625.56 |      123.28 |   13502.28 |            0.90
+ 2011 |     2 | historical | JP           | Japan                | GBP               | USD                |             85 |                0 |    9249.25 |        0.00 |    9249.25 |            0.00
+ 2011 |     2 | historical | CY           | Cyprus               | GBP               | USD                |            156 |                1 |    6934.78 |      513.10 |    6421.68 |            7.40
+ 2011 |     2 | historical | CH           | Switzerland          | GBP               | USD                |            101 |                2 |    4247.88 |       19.60 |    4228.28 |            0.46
+ 2011 |     2 | historical | BE           | Belgium              | GBP               | USD                |            117 |                3 |    3489.74 |       31.60 |    3458.14 |            0.91
+ 2011 |     2 | historical | ES           | Spain                | GBP               | USD                |             96 |                4 |    3383.21 |       33.28 |    3349.93 |            0.98
+ 2011 |     2 | historical | JE           | Channel Islands      | GBP               | USD                |             10 |                0 |    2855.53 |        0.00 |    2855.53 |            0.00
+ 2011 |     2 | historical | PT           | Portugal             | GBP               | USD                |             57 |                0 |    1942.25 |        0.00 |    1942.25 |            0.00
+ 2011 |     2 | historical | AE           | United Arab Emirates | GBP               | USD                |             30 |                0 |    1422.79 |        0.00 |    1422.79 |            0.00
+ 2011 |     2 | historical | IL           | Israel               | GBP               | USD                |             16 |                0 |    1246.56 |        0.00 |    1246.56 |            0.00
+ 2011 |     2 | historical | NO           | Norway               | GBP               | USD                |             32 |                0 |    1009.44 |        0.00 |    1009.44 |            0.00
+ 2011 |     2 | historical | PL           | Poland               | GBP               | USD                |             28 |                0 |     966.48 |        0.00 |     966.48 |            0.00
+ 2011 |     2 | historical | CZ           | Czech Republic       | GBP               | USD                |             15 |                0 |     878.82 |        0.00 |     878.82 |            0.00
+ 2011 |     2 | historical | AT           | Austria              | GBP               | USD                |             21 |                0 |     829.38 |        0.00 |     829.38 |            0.00
+ 2011 |     2 | historical | SE           | Sweden               | GBP               | USD                |             12 |                0 |     815.20 |        0.00 |     815.20 |            0.00
+ 2011 |     2 | historical | DK           | Denmark              | GBP               | USD                |             20 |                0 |     638.76 |        0.00 |     638.76 |            0.00
+ 2011 |     2 | historical | IT           | Italy                | GBP               | USD                |             13 |                1 |     409.60 |        7.20 |     402.40 |            1.76
+ 2011 |     2 | historical | FI           | Finland              | GBP               | USD                |             12 |                0 |     328.25 |        0.00 |     328.25 |            0.00
+ 2011 |     2 | historical | SA           | Saudi Arabia         | GBP               | USD                |              9 |                0 |     233.47 |        0.00 |     233.47 |            0.00
+ 2011 |     3 | historical | GB           | United Kingdom       | GBP               | USD                |          32308 |              622 |  935700.56 |    42163.04 |  893537.52 |            4.51
+ 2011 |     3 | historical | NL           | Netherlands          | GBP               | USD                |            189 |                0 |   35866.35 |        0.00 |   35866.35 |            0.00
+ 2011 |     3 | historical | IE           | Ireland              | GBP               | USD                |            558 |                7 |   35516.01 |     5462.84 |   30053.17 |           15.38
+ 2011 |     3 | historical | AU           | Australia            | GBP               | USD                |            108 |                2 |   27558.34 |      269.92 |   27288.42 |            0.98
+ 2011 |     3 | historical | FR           | France               | GBP               | USD                |            543 |                5 |   23335.87 |      116.24 |   23219.63 |            0.50
+ 2011 |     3 | historical | DE           | Germany              | GBP               | USD                |            577 |               27 |   23028.29 |      356.27 |   22672.02 |            1.55
+ 2011 |     3 | historical | FI           | Finland              | GBP               | USD                |            214 |                2 |    9498.88 |       19.52 |    9479.36 |            0.21
+ 2011 |     3 | historical | ES           | Spain                | GBP               | USD                |            201 |                3 |    8581.04 |       58.40 |    8522.64 |            0.68
+ 2011 |     3 | historical | SE           | Sweden               | GBP               | USD                |             35 |                1 |    7552.92 |      288.00 |    7264.92 |            3.81
+ 2011 |     3 | historical | DK           | Denmark              | GBP               | USD                |             19 |                0 |    6366.38 |        0.00 |    6366.38 |            0.00
+ 2011 |     3 | historical | JE           | Channel Islands      | GBP               | USD                |            182 |                0 |    5614.92 |        0.00 |    5614.92 |            0.00
+ 2011 |     3 | historical | BE           | Belgium              | GBP               | USD                |            161 |                2 |    5363.18 |       29.44 |    5333.74 |            0.55
+ 2011 |     3 | historical | PT           | Portugal             | GBP               | USD                |            114 |                0 |    4257.37 |        0.00 |    4257.37 |            0.00
+ 2011 |     3 | historical | CH           | Switzerland          | GBP               | USD                |             58 |                0 |    2992.37 |        0.00 |    2992.37 |            0.00
+ 2011 |     3 | historical | IT           | Italy                | GBP               | USD                |             83 |                2 |    2890.90 |       44.64 |    2846.26 |            1.54
+ 2011 |     3 | historical | AT           | Austria              | GBP               | USD                |             18 |                0 |    2732.99 |        0.00 |    2732.99 |            0.00
+ 2011 |     3 | historical | CY           | Cyprus               | GBP               | USD                |             48 |                0 |    1501.43 |        0.00 |    1501.43 |            0.00
+ 2011 |     3 | historical | GR           | Greece               | GBP               | USD                |             22 |                0 |     619.70 |        0.00 |     619.70 |            0.00
+ 2011 |     3 | historical | NO           | Norway               | GBP               | USD                |             23 |               10 |    2024.50 |     1537.01 |     487.49 |           75.92
+ 2011 |     3 | historical | PL           | Poland               | GBP               | USD                |              9 |                3 |     508.46 |       23.02 |     485.44 |            4.53
+ 2011 |     3 | historical | CA           | Canada               | GBP               | USD                |             10 |                0 |     224.86 |        0.00 |     224.86 |            0.00
+ 2011 |     3 | historical | HK           | Hong Kong            | GBP               | USD                |              1 |                1 |    4134.02 |     4134.02 |       0.00 |          100.00
+ 2011 |     3 | historical | SA           | Saudi Arabia         | GBP               | USD                |              0 |                1 |       0.00 |       23.60 |     -23.60 |                
+ 2011 |     3 | historical | JP           | Japan                | GBP               | USD                |             16 |                8 |      78.23 |      196.09 |    -117.86 |          250.66
+ 2011 |     4 | historical | GB           | United Kingdom       | GBP               | USD                |          27067 |              496 |  761086.62 |    54820.56 |  706266.06 |            7.20
+ 2011 |     4 | historical | DE           | Germany              | GBP               | USD                |            440 |               22 |   19704.86 |      563.48 |   19141.38 |            2.86
+ 2011 |     4 | historical | IE           | Ireland              | GBP               | USD                |            306 |                0 |   12112.80 |        0.00 |   12112.80 |            0.00
+ 2011 |     4 | historical | JP           | Japan                | GBP               | USD                |             46 |                9 |   10477.62 |     2682.67 |    7794.95 |           25.60
+ 2011 |     4 | historical | FR           | France               | GBP               | USD                |            226 |                7 |    8847.35 |     2135.04 |    6712.31 |           24.13
+ 2011 |     4 | historical | NL           | Netherlands          | GBP               | USD                |             24 |                0 |    4762.50 |        0.00 |    4762.50 |            0.00
+ 2011 |     4 | historical | SG           | Singapore            | GBP               | USD                |             57 |                5 |   13135.31 |     9745.34 |    3389.97 |           74.19
+ 2011 |     4 | historical | BE           | Belgium              | GBP               | USD                |            116 |                7 |    3183.16 |       56.53 |    3126.63 |            1.78
+ 2011 |     4 | historical | CH           | Switzerland          | GBP               | USD                |             79 |                3 |    3323.11 |      407.60 |    2915.51 |           12.27
+ 2011 |     4 | historical | ES           | Spain                | GBP               | USD                |             96 |                0 |    2857.05 |        0.00 |    2857.05 |            0.00
+ 2011 |     4 | historical | PT           | Portugal             | GBP               | USD                |             77 |                0 |    2700.42 |        0.00 |    2700.42 |            0.00
+ 2011 |     4 | historical | FI           | Finland              | GBP               | USD                |             40 |                3 |    2702.26 |       99.38 |    2602.88 |            3.68
+ 2011 |     4 | historical | HK           | Hong Kong            | GBP               | USD                |             32 |                0 |    2463.43 |        0.00 |    2463.43 |            0.00
+ 2011 |     4 | historical | BR           | Brazil               | GBP               | USD                |             32 |                0 |    1829.76 |        0.00 |    1829.76 |            0.00
+ 2011 |     4 | historical | SE           | Sweden               | GBP               | USD                |             34 |                0 |    1294.56 |        0.00 |    1294.56 |            0.00
+ 2011 |     4 | historical | IT           | Italy                | GBP               | USD                |             22 |                0 |    1180.53 |        0.00 |    1180.53 |            0.00
+ 2011 |     4 | historical | PL           | Poland               | GBP               | USD                |             25 |                0 |    1129.35 |        0.00 |    1129.35 |            0.00
+ 2011 |     4 | historical | AT           | Austria              | GBP               | USD                |             26 |                0 |    1089.25 |        0.00 |    1089.25 |            0.00
+ 2011 |     4 | historical | IS           | Iceland              | GBP               | USD                |             24 |                0 |    1018.00 |        0.00 |    1018.00 |            0.00
+ 2011 |     4 | historical | GR           | Greece               | GBP               | USD                |             31 |                0 |     975.60 |        0.00 |     975.60 |            0.00
+ 2011 |     4 | historical | US           | United States        | GBP               | USD                |             22 |                0 |     614.32 |        0.00 |     614.32 |            0.00
+ 2011 |     4 | historical | AU           | Australia            | GBP               | USD                |             18 |                2 |    1234.56 |      701.12 |     533.44 |           56.79
+ 2011 |     4 | historical | ZZ           | Unknown              | GBP               | USD                |             16 |                0 |     478.56 |        0.00 |     478.56 |            0.00
+ 2011 |     4 | historical | JE           | Channel Islands      | GBP               | USD                |              9 |                0 |     468.80 |        0.00 |     468.80 |            0.00
+ 2011 |     4 | historical | EU           | European Community   | GBP               | USD                |             11 |                0 |     306.24 |        0.00 |     306.24 |            0.00
+ 2011 |     4 | historical | IL           | Israel               | GBP               | USD                |              6 |                0 |     176.00 |        0.00 |     176.00 |            0.00
+ 2011 |     4 | historical | CY           | Cyprus               | GBP               | USD                |              0 |                2 |       0.00 |       57.28 |     -57.28 |                
+ 2011 |     4 | historical | CZ           | Czech Republic       | GBP               | USD                |              0 |                2 |       0.00 |       92.02 |     -92.02 |                
+ 2011 |     5 | historical | GB           | United Kingdom       | GBP               | USD                |          32614 |              570 | 1020972.89 |    68567.20 |  952405.69 |            6.72
+ 2011 |     5 | historical | NL           | Netherlands          | GBP               | USD                |            215 |                0 |   46697.37 |        0.00 |   46697.37 |            0.00
+ 2011 |     5 | historical | DE           | Germany              | GBP               | USD                |            763 |               23 |   41175.52 |      287.77 |   40887.75 |            0.70
+ 2011 |     5 | historical | IE           | Ireland              | GBP               | USD                |            608 |                8 |   28805.96 |      139.86 |   28666.10 |            0.49
+ 2011 |     5 | historical | FR           | France               | GBP               | USD                |            722 |                5 |   28170.36 |      140.48 |   28029.88 |            0.50
+ 2011 |     5 | historical | AU           | Australia            | GBP               | USD                |            116 |                1 |   21821.47 |       15.84 |   21805.63 |            0.07
+ 2011 |     5 | historical | CH           | Switzerland          | GBP               | USD                |            151 |                2 |    5776.03 |       68.48 |    5707.55 |            1.19
+ 2011 |     5 | historical | ES           | Spain                | GBP               | USD                |            105 |                0 |    5212.16 |        0.00 |    5212.16 |            0.00
+ 2011 |     5 | historical | BE           | Belgium              | GBP               | USD                |            147 |                2 |    4371.81 |        8.64 |    4363.17 |            0.20
+ 2011 |     5 | historical | SE           | Sweden               | GBP               | USD                |             19 |                2 |    4291.16 |       27.20 |    4263.96 |            0.63
+ 2011 |     5 | historical | HK           | Hong Kong            | GBP               | USD                |             93 |                0 |    3145.85 |        0.00 |    3145.85 |            0.00
+ 2011 |     5 | historical | PL           | Poland               | GBP               | USD                |             69 |                0 |    2435.80 |        0.00 |    2435.80 |            0.00
+ 2011 |     5 | historical | JP           | Japan                | GBP               | USD                |             12 |                0 |    2162.31 |        0.00 |    2162.31 |            0.00
+ 2011 |     5 | historical | AT           | Austria              | GBP               | USD                |             51 |                0 |    1999.09 |        0.00 |    1999.09 |            0.00
+ 2011 |     5 | historical | ZZ           | Unknown              | GBP               | USD                |             58 |                0 |    1689.39 |        0.00 |    1689.39 |            0.00
+ 2011 |     5 | historical | JE           | Channel Islands      | GBP               | USD                |             34 |                3 |    1931.58 |      485.52 |    1446.06 |           25.14
+ 2011 |     5 | historical | PT           | Portugal             | GBP               | USD                |             80 |                5 |    6723.57 |     5783.04 |     940.53 |           86.01
+ 2011 |     5 | historical | IT           | Italy                | GBP               | USD                |             23 |                0 |     939.92 |        0.00 |     939.92 |            0.00
+ 2011 |     5 | historical | BH           | Bahrain              | GBP               | USD                |             17 |                0 |     877.44 |        0.00 |     877.44 |            0.00
+ 2011 |     5 | historical | CA           | Canada               | GBP               | USD                |              1 |                0 |     854.78 |        0.00 |     854.78 |            0.00
+ 2011 |     5 | historical | DK           | Denmark              | GBP               | USD                |             19 |                0 |     825.12 |        0.00 |     825.12 |            0.00
+ 2011 |     6 | historical | GB           | United Kingdom       | GBP               | USD                |          32130 |              598 |  989358.12 |   104024.51 |  885333.61 |           10.51
+ 2011 |     6 | historical | NL           | Netherlands          | GBP               | USD                |            324 |                1 |   42972.93 |       24.00 |   42948.93 |            0.06
+ 2011 |     6 | historical | AU           | Australia            | GBP               | USD                |            169 |                2 |   40300.41 |       36.80 |   40263.61 |            0.09
+ 2011 |     6 | historical | IE           | Ireland              | GBP               | USD                |            624 |               45 |   39781.77 |     7637.37 |   32144.40 |           19.20
+ 2011 |     6 | historical | FR           | France               | GBP               | USD                |            590 |               20 |   26157.46 |      570.47 |   25586.99 |            2.18
+ 2011 |     6 | historical | DE           | Germany              | GBP               | USD                |            650 |               24 |   21194.13 |      308.92 |   20885.21 |            1.46
+ 2011 |     6 | historical | CH           | Switzerland          | GBP               | USD                |            125 |                4 |   12646.63 |       35.12 |   12611.51 |            0.28
+ 2011 |     6 | historical | NO           | Norway               | GBP               | USD                |            166 |                0 |    9418.98 |        0.00 |    9418.98 |            0.00
+ 2011 |     6 | historical | BE           | Belgium              | GBP               | USD                |            230 |                1 |    6839.73 |        2.64 |    6837.09 |            0.04
+ 2011 |     6 | historical | ES           | Spain                | GBP               | USD                |            181 |                1 |    5333.13 |        1.23 |    5331.90 |            0.02
+ 2011 |     6 | historical | DK           | Denmark              | GBP               | USD                |            106 |                0 |    5217.86 |        0.00 |    5217.86 |            0.00
+ 2011 |     6 | historical | JE           | Channel Islands      | GBP               | USD                |             81 |                0 |    3296.05 |        0.00 |    3296.05 |            0.00
+ 2011 |     6 | historical | JP           | Japan                | GBP               | USD                |              6 |                0 |    2571.26 |        0.00 |    2571.26 |            0.00
+ 2011 |     6 | historical | CA           | Canada               | GBP               | USD                |             57 |                0 |    1874.35 |        0.00 |    1874.35 |            0.00
+ 2011 |     6 | historical | CY           | Cyprus               | GBP               | USD                |             47 |                0 |    1774.91 |        0.00 |    1774.91 |            0.00
+ 2011 |     6 | historical | PT           | Portugal             | GBP               | USD                |             48 |                1 |    1415.14 |        7.92 |    1407.22 |            0.56
+ 2011 |     6 | historical | MT           | Malta                | GBP               | USD                |             45 |                2 |    1381.07 |       20.40 |    1360.67 |            1.48
+ 2011 |     6 | historical | SE           | Sweden               | GBP               | USD                |             35 |                0 |    1331.20 |        0.00 |    1331.20 |            0.00
+ 2011 |     6 | historical | HK           | Hong Kong            | GBP               | USD                |             16 |                0 |    1014.34 |        0.00 |    1014.34 |            0.00
+ 2011 |     6 | historical | EU           | European Community   | GBP               | USD                |             20 |                1 |     691.28 |       13.60 |     677.68 |            1.97
+ 2011 |     6 | historical | IS           | Iceland              | GBP               | USD                |             18 |                0 |     612.04 |        0.00 |     612.04 |            0.00
+ 2011 |     6 | historical | FI           | Finland              | GBP               | USD                |             13 |                0 |     527.30 |        0.00 |     527.30 |            0.00
+ 2011 |     6 | historical | PL           | Poland               | GBP               | USD                |             16 |                4 |     549.84 |      126.26 |     423.58 |           22.96
+ 2011 |     6 | historical | ZZ           | Unknown              | GBP               | USD                |              9 |                0 |     297.25 |        0.00 |     297.25 |            0.00
+ 2011 |     6 | historical | IT           | Italy                | GBP               | USD                |             10 |                3 |     323.32 |       63.68 |     259.64 |           19.70
+ 2011 |     6 | historical | AT           | Austria              | GBP               | USD                |              0 |                2 |       0.00 |       38.72 |     -38.72 |                
+ 2011 |     7 | historical | GB           | United Kingdom       | GBP               | USD                |          34961 |              576 |  961476.35 |    58420.86 |  903055.49 |            6.08
+ 2011 |     7 | historical | IE           | Ireland              | GBP               | USD                |            707 |                7 |   68382.15 |       78.72 |   68303.43 |            0.12
+ 2011 |     7 | historical | DE           | Germany              | GBP               | USD                |            755 |               32 |   26305.52 |     1150.90 |   25154.62 |            4.38
+ 2011 |     7 | historical | FR           | France               | GBP               | USD                |            448 |                5 |   16000.23 |      177.92 |   15822.31 |            1.11
+ 2011 |     7 | historical | ES           | Spain                | GBP               | USD                |            177 |                1 |   12193.22 |       74.80 |   12118.42 |            0.61
+ 2011 |     7 | historical | SE           | Sweden               | GBP               | USD                |             54 |                0 |   10883.32 |        0.00 |   10883.32 |            0.00
+ 2011 |     7 | historical | AU           | Australia            | GBP               | USD                |            159 |               58 |    7943.02 |      314.91 |    7628.11 |            3.96
+ 2011 |     7 | historical | SG           | Singapore            | GBP               | USD                |             75 |                0 |    6318.92 |        0.00 |    6318.92 |            0.00
+ 2011 |     7 | historical | JP           | Japan                | GBP               | USD                |             39 |                0 |    6167.02 |        0.00 |    6167.02 |            0.00
+ 2011 |     7 | historical | CH           | Switzerland          | GBP               | USD                |            175 |                2 |    6385.21 |      355.20 |    6030.01 |            5.56
+ 2011 |     7 | historical | FI           | Finland              | GBP               | USD                |             83 |                0 |    4794.76 |        0.00 |    4794.76 |            0.00
+ 2011 |     7 | historical | BE           | Belgium              | GBP               | USD                |            128 |                1 |    3960.91 |        3.12 |    3957.79 |            0.08
+ 2011 |     7 | historical | PT           | Portugal             | GBP               | USD                |             89 |                0 |    3660.57 |        0.00 |    3660.57 |            0.00
+ 2011 |     7 | historical | CA           | Canada               | GBP               | USD                |             78 |                0 |    2829.75 |        0.00 |    2829.75 |            0.00
+ 2011 |     7 | historical | IL           | Israel               | GBP               | USD                |             27 |                0 |    2289.20 |        0.00 |    2289.20 |            0.00
+ 2011 |     7 | historical | ZZ           | Unknown              | GBP               | USD                |            218 |                0 |    2270.59 |        0.00 |    2270.59 |            0.00
+ 2011 |     7 | historical | AT           | Austria              | GBP               | USD                |             55 |                0 |    1907.12 |        0.00 |    1907.12 |            0.00
+ 2011 |     7 | historical | NO           | Norway               | GBP               | USD                |             49 |                0 |    1424.12 |        0.00 |    1424.12 |            0.00
+ 2011 |     7 | historical | PL           | Poland               | GBP               | USD                |             32 |                1 |    1099.68 |       14.16 |    1085.52 |            1.29
+ 2011 |     7 | historical | EU           | European Community   | GBP               | USD                |             29 |                0 |    1082.88 |        0.00 |    1082.88 |            0.00
+ 2011 |     7 | historical | DK           | Denmark              | GBP               | USD                |             17 |                0 |     601.99 |        0.00 |     601.99 |            0.00
+ 2011 |     7 | historical | GR           | Greece               | GBP               | USD                |             24 |                1 |     674.00 |       80.00 |     594.00 |           11.87
+ 2011 |     7 | historical | IT           | Italy                | GBP               | USD                |              6 |                0 |     235.36 |        0.00 |     235.36 |            0.00
+ 2011 |     7 | historical | NL           | Netherlands          | GBP               | USD                |             10 |                0 |      41.64 |        0.00 |      41.64 |            0.00
+ 2011 |     8 | historical | GB           | United Kingdom       | GBP               | USD                |          30259 |              535 |  970860.61 |    74863.86 |  895996.75 |            7.71
+ 2011 |     8 | historical | NL           | Netherlands          | GBP               | USD                |            276 |                4 |   64524.49 |     1075.20 |   63449.29 |            1.67
+ 2011 |     8 | historical | AU           | Australia            | GBP               | USD                |            107 |                0 |   35982.70 |        0.00 |   35982.70 |            0.00
+ 2011 |     8 | historical | DE           | Germany              | GBP               | USD                |            795 |               25 |   30753.27 |      315.39 |   30437.88 |            1.03
+ 2011 |     8 | historical | FR           | France               | GBP               | USD                |            569 |                2 |   22097.49 |       34.72 |   22062.77 |            0.16
+ 2011 |     8 | historical | IE           | Ireland              | GBP               | USD                |            649 |               59 |   29350.70 |     9914.05 |   19436.65 |           33.78
+ 2011 |     8 | historical | JE           | Channel Islands      | GBP               | USD                |            139 |                1 |    7819.01 |        6.80 |    7812.21 |            0.09
+ 2011 |     8 | historical | CH           | Switzerland          | GBP               | USD                |            267 |               10 |    7951.88 |      140.32 |    7811.56 |            1.76
+ 2011 |     8 | historical | IL           | Israel               | GBP               | USD                |            171 |                0 |    7798.11 |        0.00 |    7798.11 |            0.00
+ 2011 |     8 | historical | BE           | Belgium              | GBP               | USD                |            194 |                3 |    5686.47 |       28.64 |    5657.83 |            0.50
+ 2011 |     8 | historical | ES           | Spain                | GBP               | USD                |            250 |                2 |    5347.83 |       26.40 |    5321.43 |            0.49
+ 2011 |     8 | historical | HK           | Hong Kong            | GBP               | USD                |             49 |                0 |    4502.32 |        0.00 |    4502.32 |            0.00
+ 2011 |     8 | historical | NO           | Norway               | GBP               | USD                |             77 |                4 |    3241.29 |       66.16 |    3175.13 |            2.04
+ 2011 |     8 | historical | IT           | Italy                | GBP               | USD                |             95 |                6 |    3185.53 |       89.84 |    3095.69 |            2.82
+ 2011 |     8 | historical | AT           | Austria              | GBP               | USD                |             88 |                0 |    2425.69 |        0.00 |    2425.69 |            0.00
+ 2011 |     8 | historical | SE           | Sweden               | GBP               | USD                |             39 |                1 |    2224.58 |       15.84 |    2208.74 |            0.71
+ 2011 |     8 | historical | FI           | Finland              | GBP               | USD                |             61 |                1 |    2202.40 |        7.92 |    2194.48 |            0.36
+ 2011 |     8 | historical | PT           | Portugal             | GBP               | USD                |             41 |                1 |    1954.24 |       24.00 |    1930.24 |            1.23
+ 2011 |     8 | historical | MT           | Malta                | GBP               | USD                |             55 |                2 |    1790.39 |       25.20 |    1765.19 |            1.41
+ 2011 |     8 | historical | IS           | Iceland              | GBP               | USD                |             22 |                0 |     935.86 |        0.00 |     935.86 |            0.00
+ 2011 |     8 | historical | ZZ           | Unknown              | GBP               | USD                |             23 |                0 |     849.66 |        0.00 |     849.66 |            0.00
+ 2011 |     8 | historical | PL           | Poland               | GBP               | USD                |             17 |                0 |     642.88 |        0.00 |     642.88 |            0.00
+ 2011 |     8 | historical | DK           | Denmark              | GBP               | USD                |             16 |                3 |     341.04 |      215.28 |     125.76 |           63.12
+ 2011 |     8 | historical | CA           | Canada               | GBP               | USD                |              5 |                0 |      82.49 |        0.00 |      82.49 |            0.00
+ 2011 |     8 | historical | JP           | Japan                | GBP               | USD                |              0 |                8 |       0.00 |       79.66 |     -79.66 |                
+ 2011 |     9 | historical | GB           | United Kingdom       | GBP               | USD                |          44311 |              702 | 1432164.79 |    55990.81 | 1376173.98 |            3.91
+ 2011 |     9 | historical | IE           | Ireland              | GBP               | USD                |           1179 |               34 |   68677.98 |      716.00 |   67961.98 |            1.04
+ 2011 |     9 | historical | NL           | Netherlands          | GBP               | USD                |            242 |                0 |   43099.57 |        0.00 |   43099.57 |            0.00
+ 2011 |     9 | historical | FR           | France               | GBP               | USD                |           1038 |               17 |   37484.86 |      366.67 |   37118.19 |            0.98
+ 2011 |     9 | historical | DE           | Germany              | GBP               | USD                |            771 |               34 |   28927.22 |      593.45 |   28333.77 |            2.05
+ 2011 |     9 | historical | NO           | Norway               | GBP               | USD                |            202 |                0 |   13886.30 |        0.00 |   13886.30 |            0.00
+ 2011 |     9 | historical | CH           | Switzerland          | GBP               | USD                |            192 |                7 |   13255.77 |       47.85 |   13207.92 |            0.36
+ 2011 |     9 | historical | ES           | Spain                | GBP               | USD                |            242 |                2 |    8302.80 |       40.80 |    8262.00 |            0.49
+ 2011 |     9 | historical | AU           | Australia            | GBP               | USD                |            102 |                2 |    8170.75 |      120.00 |    8050.75 |            1.47
+ 2011 |     9 | historical | SE           | Sweden               | GBP               | USD                |             38 |                0 |    7320.33 |        0.00 |    7320.33 |            0.00
+ 2011 |     9 | historical | DK           | Denmark              | GBP               | USD                |             46 |                0 |    7312.27 |        0.00 |    7312.27 |            0.00
+ 2011 |     9 | historical | BE           | Belgium              | GBP               | USD                |            184 |                1 |    6732.82 |       16.32 |    6716.50 |            0.24
+ 2011 |     9 | historical | PT           | Portugal             | GBP               | USD                |             74 |                0 |    2293.15 |        0.00 |    2293.15 |            0.00
+ 2011 |     9 | historical | JE           | Channel Islands      | GBP               | USD                |             65 |                1 |    2118.02 |        3.36 |    2114.66 |            0.16
+ 2011 |     9 | historical | FI           | Finland              | GBP               | USD                |             33 |                0 |    1768.72 |        0.00 |    1768.72 |            0.00
+ 2011 |     9 | historical | AE           | United Arab Emirates | GBP               | USD                |             38 |                0 |    1620.84 |        0.00 |    1620.84 |            0.00
+ 2011 |     9 | historical | PL           | Poland               | GBP               | USD                |             30 |                0 |     846.81 |        0.00 |     846.81 |            0.00
+ 2011 |     9 | historical | IL           | Israel               | GBP               | USD                |             27 |                0 |     677.97 |        0.00 |     677.97 |            0.00
+ 2011 |     9 | historical | ZZ           | Unknown              | GBP               | USD                |             65 |                0 |     454.84 |        0.00 |     454.84 |            0.00
+ 2011 |     9 | historical | IT           | Italy                | GBP               | USD                |             15 |                0 |     447.68 |        0.00 |     447.68 |            0.00
+ 2011 |     9 | historical | CY           | Cyprus               | GBP               | USD                |              1 |                0 |     314.16 |        0.00 |     314.16 |            0.00
+ 2011 |     9 | historical | JP           | Japan                | GBP               | USD                |              4 |                0 |     179.33 |        0.00 |     179.33 |            0.00
+ 2011 |     9 | historical | HK           | Hong Kong            | GBP               | USD                |              1 |                1 |    4246.32 |     4246.32 |       0.00 |          100.00
+ 2011 |    10 | historical | GB           | United Kingdom       | GBP               | USD                |          52596 |              941 | 1496652.05 |    94652.34 | 1401999.71 |            6.32
+ 2011 |    10 | historical | NL           | Netherlands          | GBP               | USD                |            278 |                0 |   65133.80 |        0.00 |   65133.80 |            0.00
+ 2011 |    10 | historical | DE           | Germany              | GBP               | USD                |           1285 |               36 |   50605.58 |     1638.65 |   48966.93 |            3.24
+ 2011 |    10 | historical | FR           | France               | GBP               | USD                |            881 |               11 |   53553.76 |    13525.46 |   40028.30 |           25.26
+ 2011 |    10 | historical | IE           | Ireland              | GBP               | USD                |            870 |               58 |   38884.76 |     1616.48 |   37268.28 |            4.16
+ 2011 |    10 | historical | AU           | Australia            | GBP               | USD                |            114 |                0 |   27440.84 |        0.00 |   27440.84 |            0.00
+ 2011 |    10 | historical | CH           | Switzerland          | GBP               | USD                |            376 |                4 |   12881.22 |       49.92 |   12831.30 |            0.39
+ 2011 |    10 | historical | SE           | Sweden               | GBP               | USD                |             47 |                0 |    9225.88 |        0.00 |    9225.88 |            0.00
+ 2011 |    10 | historical | BE           | Belgium              | GBP               | USD                |            264 |                3 |    9096.61 |       54.40 |    9042.21 |            0.60
+ 2011 |    10 | historical | PT           | Portugal             | GBP               | USD                |            434 |                2 |    9894.75 |      995.26 |    8899.49 |           10.06
+ 2011 |    10 | historical | ES           | Spain                | GBP               | USD                |            306 |               17 |   13819.13 |     5693.26 |    8125.87 |           41.20
+ 2011 |    10 | historical | CY           | Cyprus               | GBP               | USD                |            160 |                1 |    6960.53 |      314.16 |    6646.37 |            4.51
+ 2011 |    10 | historical | NO           | Norway               | GBP               | USD                |            120 |                0 |    5899.57 |        0.00 |    5899.57 |            0.00
+ 2011 |    10 | historical | IT           | Italy                | GBP               | USD                |            159 |               10 |    5583.51 |      126.24 |    5457.27 |            2.26
+ 2011 |    10 | historical | FI           | Finland              | GBP               | USD                |            114 |                1 |    4515.42 |       28.80 |    4486.62 |            0.64
+ 2011 |    10 | historical | JE           | Channel Islands      | GBP               | USD                |            102 |                0 |    4197.32 |        0.00 |    4197.32 |            0.00
+ 2011 |    10 | historical | JP           | Japan                | GBP               | USD                |             16 |                0 |    3116.86 |        0.00 |    3116.86 |            0.00
+ 2011 |    10 | historical | DK           | Denmark              | GBP               | USD                |             23 |                6 |    2385.21 |       84.24 |    2300.97 |            3.53
+ 2011 |    10 | historical | IS           | Iceland              | GBP               | USD                |             47 |                0 |    2070.92 |        0.00 |    2070.92 |            0.00
+ 2011 |    10 | historical | AT           | Austria              | GBP               | USD                |             54 |                0 |    1670.04 |        0.00 |    1670.04 |            0.00
+ 2011 |    10 | historical | ZA           | South Africa         | GBP               | USD                |             57 |                0 |    1603.69 |        0.00 |    1603.69 |            0.00
+ 2011 |    10 | historical | SG           | Singapore            | GBP               | USD                |             34 |                2 |   11307.70 |     9708.89 |    1598.81 |           85.86
+ 2011 |    10 | historical | US           | United States        | GBP               | USD                |            125 |              101 |    3697.92 |     2527.21 |    1170.71 |           68.34
+ 2011 |    10 | historical | HK           | Hong Kong            | GBP               | USD                |             34 |                1 |    1175.24 |       17.52 |    1157.72 |            1.49
+ 2011 |    10 | historical | CZ           | Czech Republic       | GBP               | USD                |             10 |                0 |     443.97 |        0.00 |     443.97 |            0.00
+ 2011 |    10 | historical | IL           | Israel               | GBP               | USD                |             31 |                0 |     211.50 |        0.00 |     211.50 |            0.00
+ 2011 |    11 | historical | GB           | United Kingdom       | GBP               | USD                |          76133 |              902 | 2111904.25 |    68038.79 | 2043865.46 |            3.22
+ 2011 |    11 | historical | FR           | France               | GBP               | USD                |           1538 |               34 |   50714.24 |     1693.20 |   49021.04 |            3.34
+ 2011 |    11 | historical | IE           | Ireland              | GBP               | USD                |           1069 |               28 |   49141.62 |      520.61 |   48621.01 |            1.06
+ 2011 |    11 | historical | DE           | Germany              | GBP               | USD                |           1088 |               53 |   44748.37 |     3169.08 |   41579.29 |            7.08
+ 2011 |    11 | historical | NL           | Netherlands          | GBP               | USD                |            225 |                1 |   41398.41 |       28.80 |   41369.61 |            0.07
+ 2011 |    11 | historical | ES           | Spain                | GBP               | USD                |            303 |                9 |   13870.54 |      232.14 |   13638.40 |            1.67
+ 2011 |    11 | historical | JP           | Japan                | GBP               | USD                |             32 |                0 |   13536.13 |        0.00 |   13536.13 |            0.00
+ 2011 |    11 | historical | CH           | Switzerland          | GBP               | USD                |            225 |                1 |   12990.38 |        3.20 |   12987.18 |            0.02
+ 2011 |    11 | historical | AU           | Australia            | GBP               | USD                |             41 |                2 |   11588.34 |      698.77 |   10889.57 |            6.03
+ 2011 |    11 | historical | NO           | Norway               | GBP               | USD                |            182 |                0 |   10444.01 |        0.00 |   10444.01 |            0.00
+ 2011 |    11 | historical | BE           | Belgium              | GBP               | USD                |            243 |                6 |   10105.22 |      138.16 |    9967.06 |            1.37
+ 2011 |    11 | historical | IT           | Italy                | GBP               | USD                |            176 |               16 |    7313.74 |      523.73 |    6790.01 |            7.16
+ 2011 |    11 | historical | FI           | Finland              | GBP               | USD                |             74 |                2 |    4912.41 |      192.00 |    4720.41 |            3.91
+ 2011 |    11 | historical | DK           | Denmark              | GBP               | USD                |             83 |                0 |    4319.33 |        0.00 |    4319.33 |            0.00
+ 2011 |    11 | historical | SE           | Sweden               | GBP               | USD                |             76 |                4 |    4355.58 |      175.23 |    4180.35 |            4.02
+ 2011 |    11 | historical | PT           | Portugal             | GBP               | USD                |            143 |                0 |    4165.28 |        0.00 |    4165.28 |            0.00
+ 2011 |    11 | historical | JE           | Channel Islands      | GBP               | USD                |             73 |                2 |    2423.64 |       31.36 |    2392.28 |            1.29
+ 2011 |    11 | historical | PL           | Poland               | GBP               | USD                |             71 |                3 |    2177.98 |       30.98 |    2147.00 |            1.42
+ 2011 |    11 | historical | AT           | Austria              | GBP               | USD                |             70 |                0 |    2127.65 |        0.00 |    2127.65 |            0.00
+ 2011 |    11 | historical | ZZ           | Unknown              | GBP               | USD                |             53 |                0 |    1545.20 |        0.00 |    1545.20 |            0.00
+ 2011 |    11 | historical | MT           | Malta                | GBP               | USD                |             12 |                6 |    1189.48 |      257.30 |     932.18 |           21.63
+ 2011 |    11 | historical | CY           | Cyprus               | GBP               | USD                |             93 |                0 |     703.47 |        0.00 |     703.47 |            0.00
+ 2011 |    11 | historical | HK           | Hong Kong            | GBP               | USD                |              1 |                1 |     521.76 |      521.76 |       0.00 |          100.00
+ 2011 |    11 | historical | CZ           | Czech Republic       | GBP               | USD                |              0 |                3 |       0.00 |       98.42 |     -98.42 |                
+ 2011 |    12 | historical | GB           | United Kingdom       | GBP               | USD                |          23316 |              277 |  946595.43 |   326162.01 |  620433.42 |           34.46
+ 2011 |    12 | historical | NL           | Netherlands          | GBP               | USD                |             86 |                0 |   18764.80 |        0.00 |   18764.80 |            0.00
+ 2011 |    12 | historical | DE           | Germany              | GBP               | USD                |            317 |               23 |   12774.68 |      287.15 |   12487.53 |            2.25
+ 2011 |    12 | historical | IE           | Ireland              | GBP               | USD                |            333 |                2 |   11745.52 |       28.56 |   11716.96 |            0.24
+ 2011 |    12 | historical | FR           | France               | GBP               | USD                |            325 |               15 |   11671.81 |      364.93 |   11306.88 |            3.13
+ 2011 |    12 | historical | PT           | Portugal             | GBP               | USD                |            101 |                1 |    4493.15 |        9.98 |    4483.17 |            0.22
+ 2011 |    12 | historical | NO           | Norway               | GBP               | USD                |             73 |                0 |    4457.13 |        0.00 |    4457.13 |            0.00
+ 2011 |    12 | historical | BE           | Belgium              | GBP               | USD                |             94 |                4 |    2268.34 |       13.28 |    2255.06 |            0.59
+ 2011 |    12 | historical | FI           | Finland              | GBP               | USD                |             13 |                1 |    1972.41 |        3.33 |    1969.08 |            0.17
+ 2011 |    12 | historical | AT           | Austria              | GBP               | USD                |              7 |                0 |    1093.12 |        0.00 |    1093.12 |            0.00
+ 2011 |    12 | historical | GR           | Greece               | GBP               | USD                |             36 |                0 |    1089.57 |        0.00 |    1089.57 |            0.00
+ 2011 |    12 | historical | US           | United States        | GBP               | USD                |             32 |               11 |    1416.36 |      431.92 |     984.44 |           30.50
+ 2011 |    12 | historical | ES           | Spain                | GBP               | USD                |             65 |                6 |     505.95 |       71.65 |     434.30 |           14.16
+ 2011 |    12 | historical | IS           | Iceland              | GBP               | USD                |             11 |                0 |     359.72 |        0.00 |     359.72 |            0.00
+ 2011 |    12 | historical | IT           | Italy                | GBP               | USD                |              8 |                0 |     320.72 |        0.00 |     320.72 |            0.00
+ 2011 |    12 | historical | JE           | Channel Islands      | GBP               | USD                |              5 |                1 |     317.44 |        6.80 |     310.64 |            2.14
+ 2011 |    12 | historical | DK           | Denmark              | GBP               | USD                |             11 |                0 |     270.24 |        0.00 |     270.24 |            0.00
+ 2011 |    12 | historical | SE           | Sweden               | GBP               | USD                |              1 |                1 |     380.80 |      380.80 |       0.00 |          100.00
+ 2011 |    12 | historical | MT           | Malta                | GBP               | USD                |              0 |                5 |       0.00 |       49.30 |     -49.30 |                
+ 2011 |    12 | historical | CY           | Cyprus               | GBP               | USD                |              0 |                4 |       0.00 |      146.00 |    -146.00 |                
+ 2011 |    12 | historical | JP           | Japan                | GBP               | USD                |              0 |                8 |       0.00 |      187.09 |    -187.09 |                
+ 2026 |    10 | events     | PE           | Peru                 | PEN               | USD                |           7804 |              519 | 4080697.71 |   197765.77 | 3882931.94 |            4.85
+ 2026 |    10 | events     | MX           | Mexico               | MXN               | USD                |           7645 |              502 | 2968751.97 |   147125.50 | 2821626.47 |            4.96
+ 2026 |    10 | events     | CO           | Colombia             | COP               | USD                |           7652 |              546 | 1362226.03 |    73211.46 | 1289014.57 |            5.37
+(317 rows)
 
 ```
 
 ## 02_category_revenue_returns.sql
 
 ```text
-  category  | line_count | invoice_count | units_sold | units_returned | gross_usd  | returns_usd |  net_usd   
-------------+------------+---------------+------------+----------------+------------+-------------+------------
- General    |     191918 |         19107 |    1841384 |          37744 | 5848094.63 |   146420.34 | 5701674.29
- Home Decor |      94489 |         15811 |    1042721 |          30928 | 3168424.77 |    71196.33 | 3097228.44
- Kitchen    |      66627 |         13841 |     602876 |          87924 | 2387774.00 |   188076.53 | 2199697.47
- Bags       |      56221 |          9971 |     638756 |          11186 | 1811973.85 |    30688.36 | 1781285.49
- Stationery |      46347 |         10254 |     705147 |          88375 | 1087353.93 |   278332.72 |  809021.21
- Christmas  |      26065 |          5502 |     320383 |           5785 |  780507.71 |    15672.21 |  764835.50
- Toys       |      15651 |          6437 |     148362 |           2837 |  386477.18 |    11066.38 |  375410.80
- Garden     |      11727 |          5521 |      96765 |           1713 |  300234.36 |     6405.64 |  293828.72
- Textiles   |      11396 |          4827 |      68791 |           1622 |  295220.01 |     7318.47 |  287901.54
- Jewellery  |       6307 |          2972 |      49848 |            872 |  128571.93 |     2458.40 |  126113.53
- Services   |       7382 |          5072 |      57388 |           6574 |  791797.39 |   668996.11 |  122801.28
+  category  | line_count | invoice_count | units_sold | units_returned | gross_usd  | returns_usd |  net_usd   | return_rate_pct 
+------------+------------+---------------+------------+----------------+------------+-------------+------------+-----------------
+ General    |     191918 |         19107 |    1841384 |          37744 | 5848094.63 |   146420.34 | 5701674.29 |            2.50
+ Home Decor |      94489 |         15811 |    1042721 |          30928 | 3168424.77 |    71196.33 | 3097228.44 |            2.25
+ Kitchen    |      66627 |         13841 |     602876 |          87924 | 2387774.00 |   188076.53 | 2199697.47 |            7.88
+ Bags       |      56221 |          9971 |     638756 |          11186 | 1811973.85 |    30688.36 | 1781285.49 |            1.69
+ Stationery |      46347 |         10254 |     705147 |          88375 | 1087353.93 |   278332.72 |  809021.21 |           25.60
+ Christmas  |      26065 |          5502 |     320383 |           5785 |  780507.71 |    15672.21 |  764835.50 |            2.01
+ Toys       |      15651 |          6437 |     148362 |           2837 |  386477.18 |    11066.38 |  375410.80 |            2.86
+ Garden     |      11727 |          5521 |      96765 |           1713 |  300234.36 |     6405.64 |  293828.72 |            2.13
+ Textiles   |      11396 |          4827 |      68791 |           1622 |  295220.01 |     7318.47 |  287901.54 |            2.48
+ Jewellery  |       6307 |          2972 |      49848 |            872 |  128571.93 |     2458.40 |  126113.53 |            1.91
+ Services   |       7382 |          5072 |      57388 |           6574 |  791797.39 |   668996.11 |  122801.28 |           84.49
+(11 rows)
+
+  category  | includes_service_codes | gross_usd  | returns_usd | return_rate_pct | unit_return_pct 
+------------+------------------------+------------+-------------+-----------------+-----------------
+ Services   | t                      |  791797.39 |   668996.11 |           84.49 |           11.46
+ Stationery | f                      | 1087353.93 |   278332.72 |           25.60 |           12.53
+ Kitchen    | f                      | 2387774.00 |   188076.53 |            7.88 |           14.58
+ Toys       | f                      |  386477.18 |    11066.38 |            2.86 |            1.91
+ General    | f                      | 5848094.63 |   146420.34 |            2.50 |            2.05
+ Textiles   | f                      |  295220.01 |     7318.47 |            2.48 |            2.36
+ Home Decor | f                      | 3168424.77 |    71196.33 |            2.25 |            2.97
+ Garden     | f                      |  300234.36 |     6405.64 |            2.13 |            1.77
+ Christmas  | f                      |  780507.71 |    15672.21 |            2.01 |            1.81
+ Jewellery  | f                      |  128571.93 |     2458.40 |            1.91 |            1.75
+ Bags       | f                      | 1811973.85 |    30688.36 |            1.69 |            1.75
 (11 rows)
 
 ```
@@ -348,18 +366,32 @@ Generado por scripts/run_queries.ps1. Montos en USD; tasas DEMO.
 ## 03_top10_sku_net_sales_returns.sql
 
 ```text
-  sku   |            product_name            |  category  | units_sold | units_returned | gross_usd | returns_usd |  net_usd  
---------+------------------------------------+------------+------------+----------------+-----------+-------------+-----------
- 22423  | REGENCY CAKESTAND 3 TIER           | General    |      13851 |            855 | 277266.14 |    15466.66 | 261799.48
- 85123A | WHITE HANGING HEART T-LIGHT HOLDER | Home Decor |      37933 |           2578 | 169702.69 |    10531.05 | 159171.64
- 47566  | PARTY BUNTING                      | General    |      18283 |            277 | 159051.88 |     1922.16 | 157129.72
- 85099B | JUMBO BAG RED RETROSPOT            | Bags       |      48371 |           1115 | 150455.74 |     3172.11 | 147283.63
- 23084  | RABBIT NIGHT LIGHT                 | Home Decor |      30739 |            108 | 106993.37 |      333.47 | 106659.90
- 22086  | PAPER CHAIN KIT 50'S CHRISTMAS     | Christmas  |      19329 |            453 | 103340.60 |     1855.53 | 101485.07
- 84879  | ASSORTED COLOUR BIRD ORNAMENT      | Home Decor |      36362 |             80 |  94084.08 |      216.30 |  93867.78
- 79321  | CHILLI LIGHTS                      | Home Decor |      10302 |             80 |  86178.87 |      559.52 |  85619.35
- 22502  | PICNIC BASKET WICKER SMALL         | General    |       1937 |             75 |  82197.66 |      616.40 |  81581.26
- 22197  | POPCORN HOLDER                     | Home Decor |      56898 |            471 |  82003.99 |      586.22 |  81417.77
+  sku   |            product_name            |  category  | units_sold | units_returned | gross_usd | returns_usd |  net_usd  | return_rate_pct | unit_return_pct 
+--------+------------------------------------+------------+------------+----------------+-----------+-------------+-----------+-----------------+-----------------
+ 22423  | REGENCY CAKESTAND 3 TIER           | General    |      13851 |            855 | 277266.14 |    15466.66 | 261799.48 |            5.58 |            6.17
+ 85123A | WHITE HANGING HEART T-LIGHT HOLDER | Home Decor |      37933 |           2578 | 169702.69 |    10531.05 | 159171.64 |            6.21 |            6.80
+ 47566  | PARTY BUNTING                      | General    |      18283 |            277 | 159051.88 |     1922.16 | 157129.72 |            1.21 |            1.52
+ 85099B | JUMBO BAG RED RETROSPOT            | Bags       |      48371 |           1115 | 150455.74 |     3172.11 | 147283.63 |            2.11 |            2.31
+ 23084  | RABBIT NIGHT LIGHT                 | Home Decor |      30739 |            108 | 106993.37 |      333.47 | 106659.90 |            0.31 |            0.35
+ 22086  | PAPER CHAIN KIT 50'S CHRISTMAS     | Christmas  |      19329 |            453 | 103340.60 |     1855.53 | 101485.07 |            1.80 |            2.34
+ 84879  | ASSORTED COLOUR BIRD ORNAMENT      | Home Decor |      36362 |             80 |  94084.08 |      216.30 |  93867.78 |            0.23 |            0.22
+ 79321  | CHILLI LIGHTS                      | Home Decor |      10302 |             80 |  86178.87 |      559.52 |  85619.35 |            0.65 |            0.78
+ 22502  | PICNIC BASKET WICKER SMALL         | General    |       1937 |             75 |  82197.66 |      616.40 |  81581.26 |            0.75 |            3.87
+ 22197  | POPCORN HOLDER                     | Home Decor |      56898 |            471 |  82003.99 |      586.22 |  81417.77 |            0.71 |            0.83
+(10 rows)
+
+  sku   |            product_name            |  category  | return_lines | units_returned | units_sold | returns_usd | gross_usd | return_rate_pct | unit_return_pct 
+--------+------------------------------------+------------+--------------+----------------+------------+-------------+-----------+-----------------+-----------------
+ 23843  | PAPER CRAFT , LITTLE BIRDIE        | Jewellery  |            1 |          80995 |      80995 |   269551.36 | 269551.36 |          100.00 |          100.00
+ 23166  | MEDIUM CERAMIC TOP STORAGE JAR     | Kitchen    |           10 |          74494 |      78033 |   123967.43 | 130721.47 |           94.83 |           95.46
+ 22423  | REGENCY CAKESTAND 3 TIER           | General    |          180 |            855 |      13851 |    15466.66 | 277266.14 |            5.58 |            6.17
+ 21108  | FAIRY CAKE FLANNEL ASSORTED COLOUR | General    |            3 |           3150 |      10241 |    10546.27 |  28856.49 |           36.55 |           30.76
+ 85123A | WHITE HANGING HEART T-LIGHT HOLDER | Home Decor |           42 |           2578 |      37933 |    10531.05 | 169702.69 |            6.21 |            6.80
+ 23113  | PANTRY CHOPPING BOARD              | Jewellery  |            6 |            946 |       1154 |     7684.90 |   9389.56 |           81.85 |           81.98
+ 48185  | DOORMAT FAIRY CAKE                 | General    |            3 |            674 |       3615 |     7287.84 |  38167.34 |           19.09 |           18.64
+ 21175  | GIN + TONIC DIET METAL SIGN        | General    |            7 |           2030 |      12207 |     6040.44 |  43205.12 |           13.98 |           16.63
+ 47566B | TEA TIME PARTY BUNTING             | General    |            7 |           1424 |       2578 |     5908.72 |  20663.87 |           28.59 |           55.24
+ 22273  | FELTCRAFT DOLL MOLLY               | Toys       |            6 |           1447 |       4509 |     5619.80 |  19179.83 |           29.30 |           32.09
 (10 rows)
 
 ```
@@ -369,12 +401,10 @@ Generado por scripts/run_queries.ps1. Montos en USD; tasas DEMO.
 ```text
  country_name | currency_code | orders | paid_orders | avg_time_to_pay_hours | median_time_to_pay_hours | cancelled_orders | cancellation_rate_pct 
 --------------+---------------+--------+-------------+-----------------------+--------------------------+------------------+-----------------------
- Peru         | PEN           |   6496 |        5171 |                 17.90 |                    17.57 |              485 |                  7.47
- Mexico       | MXN           |   6438 |        5132 |                 17.58 |                    17.50 |              494 |                  7.67
- Colombia     | COP           |   6394 |        5108 |                 17.69 |                    17.60 |              484 |                  7.57
- Colombia     | MXN           |      1 |           1 |                       |                          |                0 |                  0.00
- Mexico       | PEN           |      1 |           1 |                       |                          |                0 |                  0.00
-(5 rows)
+ Peru         | PEN           |   9107 |        7804 |                 18.27 |                    18.13 |              703 |                  7.72
+ Colombia     | COP           |   8955 |        7652 |                 18.23 |                    18.40 |              703 |                  7.85
+ Mexico       | MXN           |   8938 |        7645 |                 18.41 |                    18.50 |              709 |                  7.93
+(3 rows)
 
 ```
 
@@ -383,14 +413,18 @@ Generado por scripts/run_queries.ps1. Montos en USD; tasas DEMO.
 ```text
      batch_id      | events | late_events | late_event_pct | avg_late_hours | max_late_hours 
 -------------------+--------+-------------+----------------+----------------+----------------
- events_2026-10-22 |  13272 |         318 |           2.40 |          55.30 |          71.84
+ events_2026-10-20 |   8431 |           0 |           0.00 |                |          23.99
+ events_2026-10-21 |  12150 |           0 |           0.00 |                |          24.00
+ events_2026-10-22 |  13213 |         259 |           1.96 |          59.50 |          71.84
  events_2026-10-23 |  13304 |         367 |           2.76 |          59.43 |          71.96
  events_2026-10-24 |   5013 |         391 |           7.80 |          60.08 |          71.88
-(3 rows)
+ events_2026-10-25 |   1267 |         387 |          30.54 |          59.88 |          71.92
+ events_2026-10-26 |    405 |         190 |          46.91 |          59.12 |          71.80
+(7 rows)
 
  orders_with_late_events | events_in_those_orders | late_events_in_those_orders | avg_events_per_order 
 -------------------------+------------------------+-----------------------------+----------------------
-                    1068 |                   1502 |                        1076 |                 1.41
+                    1579 |                   3223 |                        1594 |                 2.04
 (1 row)
 
 ```
@@ -398,40 +432,107 @@ Generado por scripts/run_queries.ps1. Montos en USD; tasas DEMO.
 ## 06_rejection_rate_by_source_reason.sql
 
 ```text
-       batch_id        |      source       | rows_read |      reason_code      | rejected_rows | pct_of_batch_read 
------------------------+-------------------+-----------+-----------------------+---------------+-------------------
- events_2026-10-24     | order_events      |      5106 | invalid_lines         |             4 |            0.0783
- events_2026-10-24     | order_events      |      5106 | invalid_event_type    |             2 |            0.0392
- events_2026-10-24     | order_events      |      5106 | invalid_event_time    |             1 |            0.0196
- events_2026-10-24     | order_events      |      5106 | missing_event_id      |             1 |            0.0196
- events_2026-10-24     | order_events      |      5106 | missing_order_id      |             1 |            0.0196
- events_2026-10-23     | order_events      |     13454 | invalid_lines         |             2 |            0.0149
- events_2026-10-23     | order_events      |     13454 | missing_event_id      |             2 |            0.0149
- events_2026-10-23     | order_events      |     13454 | duplicate_id_conflict |             1 |            0.0074
- events_2026-10-23     | order_events      |     13454 | missing_order_id      |             1 |            0.0074
- events_2026-10-23     | order_events      |     13454 | non_positive_amount   |             1 |            0.0074
- events_2026-10-22     | order_events      |     13347 | invalid_lines         |             3 |            0.0225
- events_2026-10-22     | order_events      |     13347 | invalid_country       |             2 |            0.0150
- events_2026-10-22     | order_events      |     13347 | invalid_currency      |             2 |            0.0150
- events_2026-10-22     | order_events      |     13347 | invalid_event_time    |             2 |            0.0150
- events_2026-10-22     | order_events      |     13347 | invalid_event_type    |             1 |            0.0075
- events_2026-10-22     | order_events      |     13347 | missing_event_id      |             1 |            0.0075
- events_2026-10-22     | order_events      |     13347 | missing_order_id      |             1 |            0.0075
- historical_2026-10-21 | orders_historical |    541910 | invalid_price         |          2517 |            0.4645
-(18 rows)
+      source       |       batch_id        | rows_read | rows_rejected | rejection_pct | change_vs_previous_pp 
+-------------------+-----------------------+-----------+---------------+---------------+-----------------------
+ catalog           | catalog_2026-10-20_v1 |      3958 |             0 |        0.0000 |                      
+ catalog           | catalog_2026-10-21_v1 |      3958 |             0 |        0.0000 |                0.0000
+ catalog           | catalog_2026-10-22_v2 |      3958 |             0 |        0.0000 |                0.0000
+ catalog           | catalog_2026-10-23_v3 |      3958 |             0 |        0.0000 |                0.0000
+ catalog           | catalog_2026-10-24_v3 |      3958 |             0 |        0.0000 |                0.0000
+ catalog           | catalog_2026-10-25_v3 |      3958 |             0 |        0.0000 |                0.0000
+ catalog           | catalog_2026-10-26_v3 |      3958 |             0 |        0.0000 |                0.0000
+ order_events      | events_2026-10-20     |      8488 |            16 |        0.1885 |                      
+ order_events      | events_2026-10-21     |     12277 |            14 |        0.1140 |               -0.0745
+ order_events      | events_2026-10-22     |     13347 |            14 |        0.1049 |               -0.0091
+ order_events      | events_2026-10-23     |     13454 |             7 |        0.0520 |               -0.0529
+ order_events      | events_2026-10-24     |      5106 |             9 |        0.1763 |                0.1242
+ order_events      | events_2026-10-25     |      1307 |            13 |        0.9946 |                0.8184
+ order_events      | events_2026-10-26     |       426 |            12 |        2.8169 |                1.8223
+ orders_historical | historical_2026-10-21 |    541910 |          2517 |        0.4645 |                      
+(15 rows)
 
-      source       | rows_read | rows_rejected | rejection_pct 
--------------------+-----------+---------------+---------------
- orders_historical |    541910 |          2517 |        0.4645
- order_events      |     31907 |            28 |        0.0878
- catalog           |     11874 |             0 |        0.0000
-(3 rows)
+      source       |       batch_id        |        reason_code        | rejected_rows | pct_of_batch_read 
+-------------------+-----------------------+---------------------------+---------------+-------------------
+ order_events      | events_2026-10-20     | invalid_event_type        |             6 |            0.0707
+ order_events      | events_2026-10-20     | invalid_lines             |             4 |            0.0471
+ order_events      | events_2026-10-20     | invalid_currency          |             2 |            0.0236
+ order_events      | events_2026-10-20     | non_positive_amount       |             2 |            0.0236
+ order_events      | events_2026-10-20     | missing_event_id          |             1 |            0.0118
+ order_events      | events_2026-10-20     | missing_order_id          |             1 |            0.0118
+ order_events      | events_2026-10-21     | country_currency_mismatch |             2 |            0.0163
+ order_events      | events_2026-10-21     | invalid_country           |             2 |            0.0163
+ order_events      | events_2026-10-21     | invalid_event_time        |             2 |            0.0163
+ order_events      | events_2026-10-21     | invalid_event_type        |             2 |            0.0163
+ order_events      | events_2026-10-21     | missing_event_id          |             2 |            0.0163
+ order_events      | events_2026-10-21     | missing_order_id          |             2 |            0.0163
+ order_events      | events_2026-10-21     | invalid_currency          |             1 |            0.0081
+ order_events      | events_2026-10-21     | non_positive_amount       |             1 |            0.0081
+ order_events      | events_2026-10-22     | invalid_lines             |             3 |            0.0225
+ order_events      | events_2026-10-22     | country_currency_mismatch |             2 |            0.0150
+ order_events      | events_2026-10-22     | invalid_country           |             2 |            0.0150
+ order_events      | events_2026-10-22     | invalid_currency          |             2 |            0.0150
+ order_events      | events_2026-10-22     | invalid_event_time        |             2 |            0.0150
+ order_events      | events_2026-10-22     | invalid_event_type        |             1 |            0.0075
+ order_events      | events_2026-10-22     | missing_event_id          |             1 |            0.0075
+ order_events      | events_2026-10-22     | missing_order_id          |             1 |            0.0075
+ order_events      | events_2026-10-23     | invalid_lines             |             2 |            0.0149
+ order_events      | events_2026-10-23     | missing_event_id          |             2 |            0.0149
+ order_events      | events_2026-10-23     | country_currency_mismatch |             1 |            0.0074
+ order_events      | events_2026-10-23     | missing_order_id          |             1 |            0.0074
+ order_events      | events_2026-10-23     | non_positive_amount       |             1 |            0.0074
+ order_events      | events_2026-10-24     | invalid_lines             |             4 |            0.0783
+ order_events      | events_2026-10-24     | invalid_event_type        |             2 |            0.0392
+ order_events      | events_2026-10-24     | invalid_event_time        |             1 |            0.0196
+ order_events      | events_2026-10-24     | missing_event_id          |             1 |            0.0196
+ order_events      | events_2026-10-24     | missing_order_id          |             1 |            0.0196
+ order_events      | events_2026-10-25     | invalid_event_type        |             3 |            0.2295
+ order_events      | events_2026-10-25     | invalid_country           |             2 |            0.1530
+ order_events      | events_2026-10-25     | invalid_currency          |             2 |            0.1530
+ order_events      | events_2026-10-25     | invalid_event_time        |             2 |            0.1530
+ order_events      | events_2026-10-25     | non_positive_amount       |             2 |            0.1530
+ order_events      | events_2026-10-25     | missing_event_id          |             1 |            0.0765
+ order_events      | events_2026-10-25     | missing_order_id          |             1 |            0.0765
+ order_events      | events_2026-10-26     | invalid_lines             |             3 |            0.7042
+ order_events      | events_2026-10-26     | invalid_country           |             2 |            0.4695
+ order_events      | events_2026-10-26     | invalid_event_type        |             2 |            0.4695
+ order_events      | events_2026-10-26     | non_positive_amount       |             2 |            0.4695
+ order_events      | events_2026-10-26     | invalid_currency          |             1 |            0.2347
+ order_events      | events_2026-10-26     | invalid_event_time        |             1 |            0.2347
+ order_events      | events_2026-10-26     | missing_order_id          |             1 |            0.2347
+ orders_historical | historical_2026-10-21 | invalid_price             |          2517 |            0.4645
+(47 rows)
+
+      source       |        reason_code        | rows_read | rejected_rows | rejection_pct 
+-------------------+---------------------------+-----------+---------------+---------------
+ catalog           | (sin rechazos)            |     27706 |             0 |        0.0000
+ order_events      | invalid_event_type        |     54405 |            16 |        0.0294
+ order_events      | invalid_lines             |     54405 |            16 |        0.0294
+ order_events      | invalid_country           |     54405 |             8 |        0.0147
+ order_events      | invalid_currency          |     54405 |             8 |        0.0147
+ order_events      | invalid_event_time        |     54405 |             8 |        0.0147
+ order_events      | missing_event_id          |     54405 |             8 |        0.0147
+ order_events      | missing_order_id          |     54405 |             8 |        0.0147
+ order_events      | non_positive_amount       |     54405 |             8 |        0.0147
+ order_events      | country_currency_mismatch |     54405 |             5 |        0.0092
+ orders_historical | invalid_price             |    541910 |          2517 |        0.4645
+(11 rows)
 
 ```
 
 ## 07_product_catalog_attribute_history.sql
 
 ```text
+ catalog_version | effective_date | products_changed | name_changes | category_changes | active_flag_changes 
+-----------------+----------------+------------------+--------------+------------------+---------------------
+               2 | 2026-10-22     |              395 |            0 |              395 |                   0
+               3 | 2026-10-23     |              959 |          197 |              744 |                  79
+(2 rows)
+
+ products_with_changes | products_total 
+-----------------------+----------------
+                   965 |           3958
+(1 row)
+
    sku   |            product_name             |  category  | is_active |       valid_from       |           valid_to            | is_current | catalog_version |            previous_name            | previous_category | previous_is_active 
 ---------+-------------------------------------+------------+-----------+------------------------+-------------------------------+------------+-----------------+-------------------------------------+-------------------+--------------------
  15044C  | PURPLE PAPER PARASOL                | Stationery | t         | 2010-01-01 00:00:00+00 | 2026-10-21 23:59:59.999999+00 | f          |               1 |                                     |                   | 

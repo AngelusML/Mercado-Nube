@@ -1,19 +1,24 @@
-=== CONTEOs FINALES ===
-        metric         | value  
------------------------+--------
+=== CONTEOS FINALES ===
+        metric         |  value  
+-----------------------+---------
+ quality_checks_pass   | 216/216
  historical_rows_read  | 541910
- fact_order_line       | 534130
- fact_order_event      | 31589
- fact_order_lifecycle  | 19330
- product_versions_scd2 | 5312
+ event_rows_read       | 54405
+ quarantine_rows       | 2602
  current_products      | 3958
- late_events           | 1076
- quarantine_rows       | 2545
-(8 rows)
+ product_versions_scd2 | 5312
+ fact_order_lifecycle  | 27000
+ fact_order_event      | 53783
+ late_events           | 1594
+ fact_order_line       | 534130
+(10 rows)
+
 
 === METRICAS POR LOTE ===
        batch_id        |      source       |   layer   | rows_read | rows_rejected | rows_duplicated | rows_late | rows_published | rows_conflicting 
 -----------------------+-------------------+-----------+-----------+---------------+-----------------+-----------+----------------+------------------
+ catalog_2026-10-20_v1 | catalog           | cleaned   |      3958 |             0 |               0 |         0 |              0 |                0
+ catalog_2026-10-20_v1 | catalog           | published |      3958 |             0 |               0 |         0 |           3958 |                0
  catalog_2026-10-21_v1 | catalog           | cleaned   |      3958 |             0 |               0 |         0 |              0 |                0
  catalog_2026-10-21_v1 | catalog           | published |      3958 |             0 |               0 |         0 |           3958 |                0
  catalog_2026-10-22_v2 | catalog           | cleaned   |      3958 |             0 |               0 |         0 |              0 |                0
@@ -22,83 +27,25 @@
  catalog_2026-10-23_v3 | catalog           | published |      3958 |             0 |               0 |         0 |           3958 |                0
  catalog_2026-10-24_v3 | catalog           | cleaned   |      3958 |             0 |               0 |         0 |              0 |                0
  catalog_2026-10-24_v3 | catalog           | published |      3958 |             0 |               0 |         0 |           3958 |                0
- events_2026-10-22     | order_events      | cleaned   |     13347 |            12 |              63 |       318 |              0 |                0
- events_2026-10-22     | order_events      | published |     13347 |            12 |              63 |       318 |          13272 |                0
- events_2026-10-23     | order_events      | cleaned   |     13454 |             6 |              65 |       446 |              0 |                0
- events_2026-10-23     | order_events      | published |     13454 |             7 |             143 |       446 |          13304 |                1
+ catalog_2026-10-25_v3 | catalog           | cleaned   |      3958 |             0 |               0 |         0 |              0 |                0
+ catalog_2026-10-25_v3 | catalog           | published |      3958 |             0 |               0 |         0 |           3958 |                0
+ catalog_2026-10-26_v3 | catalog           | cleaned   |      3958 |             0 |               0 |         0 |              0 |                0
+ catalog_2026-10-26_v3 | catalog           | published |      3958 |             0 |               0 |         0 |           3958 |                0
+ events_2026-10-20     | order_events      | cleaned   |      8488 |            16 |              41 |         0 |              0 |                0
+ events_2026-10-20     | order_events      | published |      8488 |            16 |              41 |         0 |           8431 |                0
+ events_2026-10-21     | order_events      | cleaned   |     12277 |            14 |              64 |        49 |              0 |                0
+ events_2026-10-21     | order_events      | published |     12277 |            14 |             113 |        49 |          12150 |                0
+ events_2026-10-22     | order_events      | cleaned   |     13347 |            14 |              63 |       316 |              0 |                0
+ events_2026-10-22     | order_events      | published |     13347 |            14 |             120 |       316 |          13213 |                0
+ events_2026-10-23     | order_events      | cleaned   |     13454 |             7 |              65 |       445 |              0 |                0
+ events_2026-10-23     | order_events      | published |     13454 |             7 |             143 |       445 |          13304 |                0
  events_2026-10-24     | order_events      | cleaned   |      5106 |             9 |              26 |       449 |              0 |                0
  events_2026-10-24     | order_events      | published |      5106 |             9 |              84 |       449 |           5013 |                0
+ events_2026-10-25     | order_events      | cleaned   |      1307 |            13 |               6 |       408 |              0 |                0
+ events_2026-10-25     | order_events      | published |      1307 |            13 |              27 |       408 |           1267 |                0
+ events_2026-10-26     | order_events      | cleaned   |       426 |            12 |               5 |       194 |              0 |                0
+ events_2026-10-26     | order_events      | published |       426 |            12 |               9 |       194 |            405 |                0
  historical_2026-10-21 | orders_historical | cleaned   |    541910 |          2517 |            5263 |         0 |              0 |                0
  historical_2026-10-21 | orders_historical | published |    541910 |          2517 |            5263 |         0 |         534130 |                0
-(16 rows)
-
-=== CALIDAD: RESUMEN ===
-       batch_id        | checks | passed | failed 
------------------------+--------+--------+--------
- catalog_2026-10-21_v1 |      8 |      8 |      0
- catalog_2026-10-22_v2 |      8 |      8 |      0
- catalog_2026-10-23_v3 |      8 |      8 |      0
- catalog_2026-10-24_v3 |      8 |      8 |      0
- events_2026-10-22     |     13 |     13 |      0
- events_2026-10-23     |     13 |     13 |      0
- events_2026-10-24     |     13 |     13 |      0
- historical_2026-10-21 |      9 |      9 |      0
-(8 rows)
-
-=== CALIDAD: FALLAS (debe estar vacio) ===
- batch_id | check_name | observed_value | threshold 
-----------+------------+----------------+-----------
-(0 rows)
-
-=== CUARENTENA ===
-       batch_id        |      source       |      reason_code      | rows 
------------------------+-------------------+-----------------------+------
- events_2026-10-22     | order_events      | invalid_country       |    2
- events_2026-10-22     | order_events      | invalid_currency      |    2
- events_2026-10-22     | order_events      | invalid_event_time    |    2
- events_2026-10-22     | order_events      | invalid_event_type    |    1
- events_2026-10-22     | order_events      | invalid_lines         |    3
- events_2026-10-22     | order_events      | missing_event_id      |    1
- events_2026-10-22     | order_events      | missing_order_id      |    1
- events_2026-10-23     | order_events      | duplicate_id_conflict |    1
- events_2026-10-23     | order_events      | invalid_lines         |    2
- events_2026-10-23     | order_events      | missing_event_id      |    2
- events_2026-10-23     | order_events      | missing_order_id      |    1
- events_2026-10-23     | order_events      | non_positive_amount   |    1
- events_2026-10-24     | order_events      | invalid_event_time    |    1
- events_2026-10-24     | order_events      | invalid_event_type    |    2
- events_2026-10-24     | order_events      | invalid_lines         |    4
- events_2026-10-24     | order_events      | missing_event_id      |    1
- events_2026-10-24     | order_events      | missing_order_id      |    1
- historical_2026-10-21 | orders_historical | invalid_price         | 2517
-(18 rows)
-
-=== SCD2 ===
- catalog_version | current_versions | versions 
------------------+------------------+----------
-               1 |             2993 |     3958
-               2 |                6 |      395
-               3 |              959 |      959
-(3 rows)
-
- duplicate_current_skus 
-------------------------
-                      0
-(1 row)
-
-=== MANIFIESTOS ===
-       batch_id        |       layer       | row_count |                             checksum                             
------------------------+-------------------+-----------+------------------------------------------------------------------
- catalog_2026-10-21_v1 | curated           |      3958 | ed78469ef1ac62e58db361494046de40df1734fe3612ca57641e92e8e507217d
- catalog_2026-10-22_v2 | curated           |      4353 | cc53bc9284638acee4031c22ef442f74915adc028c27b3c30a3f734702566200
- catalog_2026-10-23_v3 | curated           |      5312 | 88ce7075938afdf03e9114f6d71e808c3341e87f3ac16b575b42c334a51a823b
- catalog_2026-10-24_v3 | curated           |      5312 | 88ce7075938afdf03e9114f6d71e808c3341e87f3ac16b575b42c334a51a823b
- events_2026-10-22     | curated           |     13272 | 80a43407d5389cc4ec0af952bf282ed6988203818137cbea02e11f175217a993
- events_2026-10-22     | curated_lifecycle |     11311 | 86bae3df3cece2727c59c21bfcba1dc0152ea0b6593f800d8c9427202fee1e5e
- events_2026-10-23     | curated           |     13304 | dd71728f9939c1d438a8a0743ec22e15bd30359c5d01f88b3e9e7ff1a4e79933
- events_2026-10-23     | curated_lifecycle |     11429 | ab3f640e26621c8424936d252d7d2d7463424010cd7be7e5fd4170368e627035
- events_2026-10-24     | curated           |      5013 | be58f76bb042c9045b618315863709aae8fa07d67660a8a2c86c1dfee6ce9190
- events_2026-10-24     | curated_lifecycle |      4970 | 9d3bddf26f41c999f4168605900a1af7fa59bae897334cd3e160daa293e61218
- historical_2026-10-21 | curated           |    534130 | 74734c354f9bc7de3111f2183d3525c5bcbf51662418d3c0a08ce517f532268e
-(11 rows)
+(30 rows)
 

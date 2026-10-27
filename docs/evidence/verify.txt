@@ -1,33 +1,41 @@
-NAME          IMAGE                        COMMAND                  SERVICE    CREATED             STATUS                       PORTS
-mn_adminer    adminer:4.8.1                "entrypoint.sh php -ÔÇª"   adminer    About an hour ago   Up About an hour             0.0.0.0:8082->8080/tcp, [::]:8082->8080/tcp
-mn_airflow    mercado-nube/airflow:local   "/bin/bash /opt/airfÔÇª"   airflow    About an hour ago   Up About an hour (healthy)   0.0.0.0:8088->8080/tcp, [::]:8088->8080/tcp
-mn_api        mercado-nube/api:local       "uvicorn main:app --ÔÇª"   api        About an hour ago   Up About an hour (healthy)   0.0.0.0:8001->8000/tcp, [::]:8001->8000/tcp
-mn_moto       motoserver/moto:latest       "/usr/local/bin/motoÔÇª"   moto       About an hour ago   Up About an hour             0.0.0.0:9002->5000/tcp, [::]:9002->5000/tcp
-mn_postgres   postgres:16                  "docker-entrypoint.sÔÇª"   postgres   About an hour ago   Up About an hour (healthy)   0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
-.........                                                                [100%]
-9 passed, 2 deselected in 2.55s
-...........                                                              [100%]
-11 passed in 6.55s
+NAME          IMAGE                        COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+mn_adminer    adminer:4.8.1                "entrypoint.sh php -ÔÇª"   adminer    12 minutes ago   Up 11 minutes             0.0.0.0:8082->8080/tcp, [::]:8082->8080/tcp
+mn_airflow    mercado-nube/airflow:local   "/bin/bash /opt/airfÔÇª"   airflow    12 minutes ago   Up 11 minutes (healthy)   0.0.0.0:8088->8080/tcp, [::]:8088->8080/tcp
+mn_api        mercado-nube/api:local       "uvicorn main:app --ÔÇª"   api        12 minutes ago   Up 12 minutes (healthy)   0.0.0.0:8001->8000/tcp, [::]:8001->8000/tcp
+mn_moto       motoserver/moto:latest       "/usr/local/bin/motoÔÇª"   moto       12 minutes ago   Up 12 minutes             0.0.0.0:9002->5000/tcp, [::]:9002->5000/tcp
+mn_postgres   postgres:16                  "docker-entrypoint.sÔÇª"   postgres   12 minutes ago   Up 12 minutes (healthy)   0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+....................                                                     [100%]
+20 passed, 2 deselected in 2.92s
+......................                                                   [100%]
+22 passed in 7.96s
         metric         | value  
 -----------------------+--------
- fact_order_line       | 534130
- fact_order_event      | 31589
- fact_order_lifecycle  | 19330
- product_versions_scd2 | 5312
+ quarantine_rows       | 2602
  current_products      | 3958
- late_events           | 1076
- quarantine_rows       | 2545
+ product_versions_scd2 | 5312
+ fact_order_lifecycle  | 27000
+ fact_order_event      | 53783
+ late_events           | 1594
+ fact_order_line       | 534130
 (7 rows)
 
        batch_id        | checks | passed | failed 
 -----------------------+--------+--------+--------
- catalog_2026-10-21_v1 |      8 |      8 |      0
- catalog_2026-10-22_v2 |      8 |      8 |      0
- catalog_2026-10-23_v3 |      8 |      8 |      0
- catalog_2026-10-24_v3 |      8 |      8 |      0
- events_2026-10-22     |     13 |     13 |      0
- events_2026-10-23     |     13 |     13 |      0
- events_2026-10-24     |     13 |     13 |      0
- historical_2026-10-21 |      9 |      9 |      0
-(8 rows)
+ catalog_2026-10-20_v1 |     12 |     12 |      0
+ catalog_2026-10-21_v1 |     12 |     12 |      0
+ catalog_2026-10-22_v2 |     12 |     12 |      0
+ catalog_2026-10-23_v3 |     12 |     12 |      0
+ catalog_2026-10-24_v3 |     12 |     12 |      0
+ catalog_2026-10-25_v3 |     12 |     12 |      0
+ catalog_2026-10-26_v3 |     12 |     12 |      0
+ events_2026-10-20     |     17 |     17 |      0
+ events_2026-10-21     |     17 |     17 |      0
+ events_2026-10-22     |     17 |     17 |      0
+ events_2026-10-23     |     17 |     17 |      0
+ events_2026-10-24     |     17 |     17 |      0
+ events_2026-10-25     |     17 |     17 |      0
+ events_2026-10-26     |     17 |     17 |      0
+ historical_2026-10-21 |     13 |     13 |      0
+(15 rows)
+
 
