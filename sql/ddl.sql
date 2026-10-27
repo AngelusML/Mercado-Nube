@@ -1,6 +1,6 @@
 -- ============================================================
 -- Mercado Nube - modelo dimensional local (PostgreSQL 16)
--- Equivalente funcional a Redshift para el MVP.
+-- Version para Redshift: sql/redshift/ddl_redshift.sql (DISTKEY/SORTKEY, SUPER, MERGE).
 -- ============================================================
 
 CREATE SCHEMA IF NOT EXISTS staging;
